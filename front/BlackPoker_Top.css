@@ -1,0 +1,60 @@
+div#Top {
+    background-image: url('./BlackPoker_Top.png');
+    width: 494px;
+    height: 302px;
+    max-width: 50%;
+    margin: 0 auto;
+}
+
+div#button1{
+    width: 46.3%;
+    max-height: 100%;
+    margin: 0 auto;
+}
+
+div#button{
+    display: block;
+    padding: 10px;
+}
+
+button{
+    background-color: #FFFFFF;
+    box-shadow: #FFFFFF;
+    border: 0px;
+    width: 550px;
+    text-align: center;
+        line-height: 50px;
+}
+
+.square_btn{
+   position: relative;
+   display: inline-block;
+   font-weight: bold;
+   font-size: xx-large;
+   padding: 15px 175px;
+   text-decoration: none;
+   color: #000000;   
+}
+
+.square_btn:before{
+   position: absolute;
+   content: '';
+   width: 550px;
+   height: 6px;
+   top:100%;
+   left: 0;
+   border-radius: 3px;
+   background:#000000;
+   transition: .2s;
+}
+
+.square_btn:hover{
+     background-color: #C4C4C4;
+     transition: background-color 1s;
+}
+
+.square_btn:hover:before {
+    top: -webkit-calc(100% - 3px);
+    top: calc(100% - 5px);
+   
+}

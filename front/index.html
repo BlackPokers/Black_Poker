@@ -1,0 +1,43 @@
+<!--DOCTYPE html-->
+<html>
+    <head>
+        <meta charset=“UFT-8”>
+        <title>BlackPoker_Toppage</title>
+        <link rel="stylesheet" type="text/css" href="BlackPoker.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!--<script type="text/javascript" src="./jquery-3.2.1.js"></script>-->
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+        <script src="./index.js" type="text/javascript"></script>
+        <script src="./modal.js" type="text/javascript"></script>
+    </head>
+
+    <body onload="initSocket()">
+
+    <div id="back">
+
+        <div id="Top"></div>
+
+        <div id="button1">
+
+            <div id="button">
+                <p>ログインID:
+                <input id="log" type="text">
+                </p>
+                <button class="square_btn" onclick="login()">Game Start</button>
+            </div>
+
+           <div id="button">
+                <button class="square_btn">Option</button>
+            </div>
+
+           <div id="button">
+                <button class="square_btn" onclick="window.open('https://sites.google.com/site/blackpoker000/')">Official site</button>
+           </div>
+
+        </div>
+
+    </div>
+
+    </body>
+
+</html>

@@ -1,0 +1,37 @@
+{
+	// IntelliSense を使用して利用可能な属性を学べます。
+	// 既存の属性の説明をホバーして表示します。
+	// 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+
+		{
+			"type": "firefox",
+			"request": "launch",
+			"name": "Client1",
+			"file": "${workspaceRoot}\\index.html"
+		},
+		{
+			"type": "firefox",
+			"request": "launch",
+			"name": "Client2",
+			"file": "${workspaceRoot}\\index.html"
+		},
+		{
+            "type": "node",
+            "request": "launch",
+            "name": "Server",
+            "program": "${workspaceRoot}\\server\\server",
+            "cwd": "${workspaceRoot}"
+		},
+		{
+			"type":"extensionHost"
+		}
+    ],
+    "compounds": [
+        {
+            "name": "Server/Client",
+            "configurations": ["Server", "Client1", "Client2"]
+        }
+	]
+}

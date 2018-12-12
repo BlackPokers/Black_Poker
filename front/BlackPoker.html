@@ -1,0 +1,112 @@
+<html>
+    <head>
+        <title>BlackPoker_Online</title>
+        <link rel="stylesheet" type="text/css" href="BlackPoker.css" />
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="modal.js"></script>
+		<script type="text/javascript" src="Card.js"></script>
+		<script src="index.js" type="text/javascript"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js" type="text/javascript"></script>
+    </head>
+
+    <body onload="load()">
+		<div class="hand-zone" id="Enemy_hand">
+        </div>
+
+        <div class="zone">
+
+			<div class="vertical">
+
+				<div class="barrier">
+					<div class="scroll-contents-side" id="enemyBarrierField">
+					</div>
+				</div>
+			</div>
+
+			<div class="battle-zone">
+				<div class="scroll-contents-vertical" id="enemyBattleField">
+				</div>
+			</div>
+
+            <div class="side">
+
+				<div class="deck">
+					<img src="./img/cover.jpg" width = "94px" height = "167px"/>
+				</div>
+
+				<div class="cemetery" id="ene_cemetery">
+				</div>
+			</div>
+            
+		</div>
+
+		<div id="buttons">
+			<div id="action_Confirmation">
+				<button id="open" class="modal_button">
+					アクションの確認
+				</button>
+			</div>
+
+			<div id="Select_end">
+					<button onclick="selectEnd()">
+						選択完了
+					</button>
+				</div>
+			<div id="turn_end">
+					<button onclick="turn_end()">
+						ターンエンド
+					</button>
+				</div>
+		</div>
+
+        <div class="zone">
+			<div class="vertical">
+
+				<div class="barrier" ondrop="barrier_drop(event, this)" ondragover="allowDrop(event)">
+					<button id="check_barrier" class="modal_button" onclick="barrier_check()">
+						防壁確認
+					</button>
+					<div class="scroll-contents-side" id="My_barrier">
+					</div>
+				</div>
+			</div>
+
+			<div class="battle-zone" ondrop="battle_drop(event, this)" ondragover="allowDrop(event)">
+				<div class="scroll-contents-vertical" id="My_BattleField">
+				</div>
+			</div>
+
+			<div class="side">
+
+				<div class="deck">
+					<img src="./img/cover.jpg" width = "94px" height = "167px"/>
+					<button id="draw" disabled="disabled">
+						ドロー
+					</button>
+				</div>
+
+				<div class="cemetery" id="my_cemetery">
+					<button id="check_cemetery" class="modal_button" onclick="cemetery_check()">
+						墓地確認
+					</button>
+				</div>
+
+			</div>
+		
+		</div>
+
+		<div class="hand-zone" id="My_hand">
+		</div>
+		
+		<div id="overlay"></div>  
+		<div id="action" class="modal"><div id="attack" class="action" onclick="attacking()">攻撃</div></div>
+		<div id="cemetery_list" class="modal"><div class="scroll-contents-vertical"></div></div>
+		<div id="barrier_list" class="modal"><div class="scroll-contents-vertical"></div></div>
+		<div id="Daction" class="modal"><div id="diffence" class="action" onclick="diffence()">ブロック(兵士)</div><div id="diffence_barrier" class="action" onclick="diffence_barrier()">ブロック(防壁)</div></div>
+		<button id="Check_diffence"></button>
+		<div id="fin" class="modal"><p id="fin_p" style="font-size: 50px"></p></div>
+		<button id="fin_b"></button>
+
+    </body>
+    
+</html>
