@@ -2,9 +2,9 @@ class Card:
     def __init__(self, number, mark):
         self.number = number
         self.attack = number
-        self.canAttack = False
-        self.isCharge = True
-        self.isFront = False
+        self.can_attack = False
+        self.is_charge = True
+        self.is_front = False
         self.mark = mark
         self.job = ""
 
@@ -14,10 +14,10 @@ class Card:
             self.job = "hero"
         elif self.number == 1:
             self.job = "ace"
-            self.canAttack = True
+            self.can_attack = True
         elif self.number == 0:
             self.job = "magician"
-            self.canAttack = True
+            self.can_attack = True
 
     def __str__(self):
         return "[" + self.number + "," + self.mark + "]"
