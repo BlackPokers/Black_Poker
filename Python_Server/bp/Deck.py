@@ -6,7 +6,7 @@ class Deck:
 
     # ターンの最初のドロー
     def first_step(self):
-        return  self.get_top()
+        return self.get_top()
 
     # デッキの一番上を取る
     def get_top(self):
@@ -26,18 +26,13 @@ class Deck:
         self.card_list.pop(length)
         return card
 
+    # デッキのシャッフル
     def shuffle(self):
         random.shuffle(self.card_list)
 
+    # デッキからカードサーチ
     def search(self, number, mark):
-        for i in len(self.card_list):
+        for i in range(0, len(self.card_list)):
             if self.card_list[i].number == number and self.card_list[i].mark == mark:
                 return self.get(i)
         return None
-
-
-
-
-
-
-

@@ -3,13 +3,13 @@ class Field:
         self.soldier = []
         self.barrier = []
 
-    # 防壁の召喚
+    # 防壁をフィールドに追加
     def set_barrier(self, card):
         self.barrier.append(card)
         self.barrier[len(self.barrier) - 1].is_charge = True
         self.barrier[len(self.barrier) - 1].is_front = True
 
-    # 兵士の召喚
+    # 兵士をフィールドに追加
     def summon(self, card):
         self.soldier.append(card)
         if card.job == "ace" or card.job == "magician":
