@@ -15,6 +15,13 @@ class Player:
         for i in range(0, 7):
             self.draw()
 
+        """
+        Parameters
+        ---------------
+        deck_list : list of Card
+            カードのリスト(デッキ)
+        """
+
     # 一枚ドローして手札に加える
     def draw(self):
         self.hand.add(self.deck.draw())
