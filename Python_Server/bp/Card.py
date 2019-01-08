@@ -1,5 +1,5 @@
 class Card:
-    def __init__(self, number, mark):
+    def __init__(self, number: int, mark: str):
         self.number = number  # カードの数字
         self.attack = number  # カードの攻撃力(数字)
         self.can_attack = False  # そのカードが攻撃できるかどうか

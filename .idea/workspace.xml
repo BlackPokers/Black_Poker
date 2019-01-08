@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dabe299-bc17-4525-8508-de723e614aa6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Python_Server/bp/Server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python_Server/bp/Card.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Server/bp/Card.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python_Server/bp/Cemetery.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Server/bp/Cemetery.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python_Server/bp/Deck.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Server/bp/Deck.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python_Server/bp/Field.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Server/bp/Field.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Python_Server/bp/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Server/bp/Game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python_Server/bp/Hand.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Server/bp/Hand.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Python_Server/bp/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Server/bp/Player.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,40 +23,42 @@
     <session id="754683170">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="9" />
+          <entry key="project.closed" value="11" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="2" />
+          <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.5" value="2" />
+          <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.8" value="3" />
-          <entry key="project.opened" value="10" />
+          <entry key="project.opened" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="13" />
-          <entry key="py" value="12990" />
-          <entry key="txt" value="165" />
+          <entry key="py" value="14038" />
+          <entry key="txt" value="238" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="13" />
-          <entry key="PLAIN_TEXT" value="165" />
-          <entry key="Python" value="12990" />
+          <entry key="PLAIN_TEXT" value="238" />
+          <entry key="Python" value="14038" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="js" value="20" />
-          <entry key="py" value="20" />
+          <entry key="js" value="25" />
+          <entry key="py" value="34" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JavaScript" value="20" />
-          <entry key="Python" value="20" />
+          <entry key="JavaScript" value="25" />
+          <entry key="Python" value="34" />
         </counts>
       </usages-collector>
     </session>
@@ -59,42 +68,30 @@
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Python_Server/bp/Field.py">
+            <entry file="file://$PROJECT_DIR$/Python_Server/bp/Server.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
-                  <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+                <state>
+                  <caret column="13" selection-start-column="13" selection-end-line="2" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Python_Server/bp/Hand.py">
+            <entry file="file://$PROJECT_DIR$/Python_Server/bp/Card.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="136">
-                  <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Python_Server/bp/Player.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
-                  <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-                  <folding>
-                    <element signature="e#0#18#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="51">
+                  <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/Python_Server/bp/Game.py">
+            <entry file="file://$PROJECT_DIR$/Python_Server/bp/Deck.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-251">
-                  <caret line="125" column="20" lean-forward="true" selection-start-line="125" selection-start-column="20" selection-end-line="125" selection-end-column="20" />
+                <state relative-caret-position="357">
+                  <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
                   <folding>
-                    <element signature="e#0#18#0" expanded="true" />
+                    <element signature="e#0#13#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -104,20 +101,20 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/server/core/Field.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="289">
+                <state relative-caret-position="-2254">
                   <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/server/Game.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="551">
-                  <caret line="170" column="16" selection-start-line="170" selection-start-column="16" selection-end-line="170" selection-end-column="16" />
+                <state relative-caret-position="184">
+                  <caret line="123" column="24" selection-start-line="123" selection-start-column="15" selection-end-line="123" selection-end-column="24" />
                 </state>
               </provider>
             </entry>
@@ -128,17 +125,30 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/server/core/Player.js">
+            <entry file="file://$PROJECT_DIR$/server/server.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2618">
-                  <caret line="154" column="19" selection-start-line="154" selection-start-column="19" selection-end-line="154" selection-end-column="19" />
+                <state relative-caret-position="884">
+                  <caret line="52" column="18" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/server/core/Cemetery.js">
-              <provider selected="true" editor-type-id="text-editor" />
+            <entry file="file://$PROJECT_DIR$/front/index.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-2754">
+                  <caret line="190" column="25" lean-forward="true" selection-start-line="190" selection-start-column="25" selection-end-line="190" selection-end-column="25" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/front/main.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-272">
+                  <caret line="29" selection-start-line="29" selection-end-line="29" />
+                </state>
+              </provider>
             </entry>
           </file>
         </leaf>
@@ -157,11 +167,19 @@
       <find>cardList</find>
       <find>battler =</find>
       <find>battler[</find>
+      <find />
+      <find>search</find>
       <find>diffence</find>
       <find>battler</find>
+      <find>p_name0</find>
+      <find>attack</find>
+      <find>firstStep</find>
+      <find>buttleing</find>
+      <find>self.p_name0</find>
     </findStrings>
     <replaceStrings>
       <replace>card_list</replace>
+      <replace />
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -173,15 +191,16 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Python_Server/bp/Cemetery.py" />
         <option value="$PROJECT_DIR$/Python_Server/bp/__init__.py" />
-        <option value="$PROJECT_DIR$/Python_Server/bp/Card.py" />
-        <option value="$PROJECT_DIR$/Python_Server/bp/Deck.py" />
-        <option value="$PROJECT_DIR$/Python_Server/bp/Hand.py" />
-        <option value="$PROJECT_DIR$/Python_Server/bp/Field.py" />
-        <option value="$PROJECT_DIR$/Python_Server/bp/Player.py" />
         <option value="$PROJECT_DIR$/server/Game.js" />
+        <option value="$PROJECT_DIR$/Python_Server/bp/Server.py" />
+        <option value="$PROJECT_DIR$/Python_Server/bp/Card.py" />
         <option value="$PROJECT_DIR$/Python_Server/bp/Game.py" />
+        <option value="$PROJECT_DIR$/Python_Server/bp/Hand.py" />
+        <option value="$PROJECT_DIR$/Python_Server/bp/Player.py" />
+        <option value="$PROJECT_DIR$/Python_Server/bp/Field.py" />
+        <option value="$PROJECT_DIR$/Python_Server/bp/Deck.py" />
+        <option value="$PROJECT_DIR$/Python_Server/bp/Cemetery.py" />
       </list>
     </option>
   </component>
@@ -234,17 +253,6 @@
               <item name="Black_Poker" type="462c0819:PsiDirectoryNode" />
               <item name="Python_Server" type="462c0819:PsiDirectoryNode" />
               <item name="bp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Black_Poker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Black_Poker" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Black_Poker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Black_Poker" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -307,7 +315,14 @@
       <option name="project" value="LOCAL" />
       <updated>1545058536115</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="pythonサーバのGameまで実装">
+      <created>1545992373216</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1545992373216</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -333,8 +348,8 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14955357" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49836066" visible="true" weight="0.14136904" />
+      <window_info id="Structure" order="1" sideWeight="0.50163937" side_tool="true" weight="0.14136904" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -345,7 +360,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.3295082" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -364,12 +379,10 @@
     <MESSAGE value="pythonサーバのカード、墓地、デッキを実装した" />
     <MESSAGE value="pythonサーバのフィールド、ハンド、プレイヤーを実装した" />
     <MESSAGE value="Game.pyのsearch_battlerまで実装できた&#10;ドキュメンテーションコメントはまだつけていない" />
-    <option name="LAST_COMMIT_MESSAGE" value="Game.pyのsearch_battlerまで実装できた&#10;ドキュメンテーションコメントはまだつけていない" />
+    <MESSAGE value="pythonサーバのGameまで実装" />
+    <option name="LAST_COMMIT_MESSAGE" value="pythonサーバのGameまで実装" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/server.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/core/Card.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -390,61 +403,6 @@
     <entry file="file://$PROJECT_DIR$/Python_Server/bp/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Cemetery.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Card.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="32" lean-forward="true" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Deck.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Field.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Hand.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Player.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/core/Field.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/core/Hand.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/core/Player.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2618">
@@ -455,19 +413,112 @@
     <entry file="file://$PROJECT_DIR$/server/core/Cemetery.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/server/core/Hand.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front/BlackPoker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-272">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="170" column="16" selection-start-line="170" selection-start-column="16" selection-end-line="170" selection-end-column="16" />
+        <state relative-caret-position="184">
+          <caret line="123" column="24" selection-start-line="123" selection-start-column="15" selection-end-line="123" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="884">
+          <caret line="52" column="18" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2754">
+          <caret line="190" column="25" lean-forward="true" selection-start-line="190" selection-start-column="25" selection-end-line="190" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/core/Field.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2254">
+          <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Field.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="53" column="44" selection-start-line="53" selection-start-column="44" selection-end-line="53" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Hand.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Player.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="166" column="48" selection-start-line="166" selection-start-column="48" selection-end-line="166" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Cemetery.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Python_Server/bp/Game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-251">
-          <caret line="125" column="20" lean-forward="true" selection-start-line="125" selection-start-column="20" selection-end-line="125" selection-end-column="20" />
+        <state relative-caret-position="-2427">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Card.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Server/bp/Deck.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
