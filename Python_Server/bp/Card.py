@@ -1,5 +1,29 @@
 class Card:
+    """
+    Attributes
+    ----------
+    number: int
+        カードの数字
+    attack: int
+        カードの攻撃力
+    can_attack: bool
+        カードが攻撃できるかどうか
+    is_charge: bool
+        カードがチャージ状態かどうか
+    is_front: bool
+        カードが表向きかどうか
+    mark: str
+        カードのマーク
+    job: str
+        カードの役職(兵士、英雄、エース、魔術師)
+    """
+
     def __init__(self, number: int, mark: str):
+        """
+        カードのコンストラクタ
+        :param number: カードの数字
+        :param mark: カードのマーク
+        """
         self.number = number  # カードの数字
         self.attack = number  # カードの攻撃力(数字)
         self.can_attack = False  # そのカードが攻撃できるかどうか

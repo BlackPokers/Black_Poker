@@ -3,8 +3,34 @@ from . import Field
 from . import Deck
 from . import Cemetery
 
+
 class Player:
+
+    """
+    カードの召喚やドローなどプレイヤーの行動を定義
+
+    Attribute
+    ----------
+    hand : Hand
+        プレイヤーの手札
+    field : Field
+        プレイヤーのフィールド
+    cemetery : Cemetery
+        プレイヤーの墓地
+    deck : Deck
+        プレイヤーのデッキ
+    can_attack
+        プレイヤーが攻撃できるかどうか
+    can_draw
+        ドローできる限界
+    """
+
     def __init__(self, deck_list: list):
+        """
+        コンストラクタ
+        :param deck_list: デッキのリスト
+        """
+
         self.hand = Hand()
         self.field = Field()
         self.cemetery = Cemetery()
@@ -14,13 +40,6 @@ class Player:
         self.can_draw = 7
         for i in range(0, 7):
             self.draw()
-
-        """
-        Parameters
-        ---------------
-        deck_list : list of Card
-            カードのリスト(デッキ)
-        """
 
     # 一枚ドローして手札に加える
     def draw(self):

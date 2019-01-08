@@ -9,5 +9,13 @@
         </list>
       </option>
     </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="Python_Server.bp.Server.num" />
+          <option value="Python_Server.bp.Server.wrapInt" />
+        </list>
+      </option>
+    </inspection_tool>
   </profile>
 </component>
