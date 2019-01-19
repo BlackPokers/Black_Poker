@@ -8,7 +8,7 @@ class wrapInt:
         self.a = n
 
     def inc(self):
-        self.a += 1;
+        self.a += 1
 
     def get(self):
         return self.a
