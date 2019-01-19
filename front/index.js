@@ -300,6 +300,7 @@ function chargeAll(){
 function transition(){//画面遷移(笑)
 	//alert("success!");
 	document.body.textContent = null;
+	
 	$.ajax({
 		type: "GET",
 		url: "BlackPoker.html",
