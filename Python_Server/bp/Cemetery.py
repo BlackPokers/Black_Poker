@@ -1,4 +1,4 @@
-from .Card import Card
+import Card
 
 
 class Cemetery:
@@ -23,5 +23,3 @@ class Cemetery:
         :param length: 何番目のカードか
         """
         return self.card_list.pop(length)
-
-

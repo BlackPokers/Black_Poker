@@ -27,12 +27,13 @@ var buttleing;
 var flag2 = false;
 
 function initSocket(){
-	socket = io.connect("http://localhost:8080");
+	socket = io.connect("ws://localhost:5000/websocket");
 
 	// 接続時にソケットIDをサーバから取得する
 
 	socket.on("onConnect", function (data){
 		datas["id"] = data["id"];
+		console.log(data["id"])
 	});
 	
 	socket.on("login", function(data){
@@ -41,19 +42,23 @@ function initSocket(){
 			datas["name"] = prm;
 		}else if(data.value == "Enrolled"){
 			//window.alert(data.value);
+			console.log(data.value);
 		}else{
-			//window.alert(data.value);
+			console.log(data.value);
 		}
 	});
 
 	socket.on("start", function(){
 		unlockScreen(lockId);
 		transition();
-		socket.emit("situation");
+		socket.emit("situation", {name: prm});
+		console.log("comp")
 	});
 
 	socket.on("situation", function(data){
+	    console.log(data)
 		situation = data;
+		console.log("situation_start")
 		if(data["user_1"]["name"] == datas["name"]){
 			user = "user_1";
 			enemy = "user_2";
@@ -86,12 +91,14 @@ function initSocket(){
 			enehandDraw();
 			fielddraw();
 		}
+		console.log("situation_comp")
 	});
 
 	socket.on("myTurn", function(){
 		turn = 1;
 		setBarrierCount = 1;
 		myhandDraw();
+		console.log("myTurn_comp")
 	});
 
 	socket.on("setBarrier", function(data){//相手の防壁設置
@@ -410,7 +417,7 @@ function barrier_drop(e, its){//防壁の召喚
 		situation[user]["barrier"].push(situation[user]["hand"][holder]);
 		console.log(situation[user]["hand"][holder]);
 		situation[user]["hand"].splice(holder, 1);
-		socket.emit("setBarrier", {handLength: holder});
+		socket.emit("setBarrier", {handLength: holder, name: prm});
 		console.log("セットバリア："+ holder);
 		console.log(handList.length);
 		handList.splice((holder), 1);
@@ -661,7 +668,7 @@ function disHand(){
 
 function turn_end(){
 	if(turn == 1){
-		socket.emit("turnEnd");
+		socket.emit("turnEnd", {name: prm});
 		turn = 0;
 	}
 }

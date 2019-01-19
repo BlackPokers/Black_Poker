@@ -1,3 +1,13 @@
+import json
+
+
+class MyJSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Card):  # Cardは'Card'としてエンコード
+            return 'Card'
+        return super(MyJSONEncoder, self).default(o)  # 他の型はdefaultのエンコード方式を使用
+
+
 class Card:
     """
     Attributes
@@ -45,9 +55,4 @@ class Card:
 
     # カードの数字とマークを返す
     def __str__(self):
-        return "[" + self.number + "," + self.mark + "]"
-
-
-
-
-
+        return "[" + str(self.number) + "," + self.mark + "]"

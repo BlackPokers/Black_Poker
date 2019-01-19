@@ -1,20 +1,23 @@
-from .Player import Player
-from .Card import Card
+import Player
+import Card
+import json
 
 
 class Game:
 
     def __init__(self):
-        self.player = [Player(Game.make_start_deck()), Player(Game.make_start_deck())]
+        self.player = [Player.Player(Game.make_start_deck()), Player.Player(Game.make_start_deck())]
         self.turn = 0
         self.turn_player = 0
         self.battler = []
         self.p_name0 = None
         self.p_name1 = None
 
+    # 防壁の召喚
     def set_barrier(self, length: int):
         self.player[self.turn_player].set_barrier(length)
 
+    # 兵士カード召喚の類
     def summon_ace(self, length: int):
         self.player[self.turn_player].summon_ace(length)
 
@@ -27,18 +30,22 @@ class Game:
     def summon_magician(self, length: int, barrier_length: int, cost_hand_length: int):
         self.player[self.turn_player].summon_ace(length, cost_hand_length, barrier_length)
 
+    # ドロー
     def draw(self):
         self.player[self.turn_player].draw()
 
+    # ターンエンド
     def end(self):
         self.turn += 1
         self.turn_player = 1 if self.turn_player == 0 else 0
 
+    # スタートステップ
     def starting(self):
         self.player[self.turn_player].charge()
         self.player[self.turn_player].can_draw = 2
         self.player[self.turn_player].can_attack = True
 
+    # 攻撃
     def attack(self, lengths: list):
         self.player[self.turn_player].can_attack = False
         attacker = self.player[self.turn_player].declaration_attack(lengths)
@@ -46,6 +53,7 @@ class Game:
         for i in range(0, len(attacker)):
             self.battler.append({"attack": {"card": attacker[i], "len": lengths[i]}})
 
+    # 防御
     def defense(self, attack: dict, place: str, lengths: list):
         attack_length = self.search_battler(attack)
 
@@ -70,6 +78,7 @@ class Game:
 
         return -1
 
+    # バトル
     def battle(self):
         for i in range(0, len(self.battler)):
             if len(self.battler) > i and self.battler[i] is not None:
@@ -162,11 +171,17 @@ class Game:
 
     @staticmethod
     def make_start_deck() ->list:
-        deck = [Card(0, "joker"), Card(0, "joker")]
+        deck = [Card.Card(0, "joker"), Card.Card(0, "joker")]
+        # deck = [json.dumps(Card.Card(0, "joker"), cls=Card.MyJSONEncoder),
+        #        json.dumps(Card.Card(0, "joker"), cls=Card.MyJSONEncoder)]
         for i in range(1, 14):
-            deck.append(Card(i, "spade"))
-            deck.append(Card(i, "heart"))
-            deck.append(Card(i, "diamond"))
-            deck.append(Card(i, "clover"))
+            deck.append(Card.Card(i, "spade"))
+            deck.append(Card.Card(i, "heart"))
+            deck.append(Card.Card(i, "diamond"))
+            deck.append(Card.Card(i, "clover"))
+            # deck.append(json.dumps(Card.Card(i, "spade"), cls=Card.MyJSONEncoder))
+            # deck.append(json.dumps(Card.Card(i, "heart"), cls=Card.MyJSONEncoder))
+            # deck.append(json.dumps(Card.Card(i, "diamond"), cls=Card.MyJSONEncoder))
+            # deck.append(json.dumps(Card.Card(i, "clover"), cls=Card.MyJSONEncoder))
 
         return deck

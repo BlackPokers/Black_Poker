@@ -1,4 +1,5 @@
-from .Card import Card
+import Card
+
 
 class Field:
     def __init__(self):

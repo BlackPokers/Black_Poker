@@ -1,4 +1,5 @@
-from .Card import Card
+import Card
+
 
 class Hand:
     def __init__(self):

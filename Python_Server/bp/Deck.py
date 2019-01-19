@@ -1,6 +1,5 @@
 import random
-from .Card import Card
-from typing import Union
+import Card
 
 class Deck:
     def __init__(self, card_list: list):
@@ -55,7 +54,7 @@ class Deck:
         random.shuffle(self.card_list)
 
     # デッキからカードサーチ
-    def search(self, number: int, mark: str) ->Union[Card, None]:
+    def search(self, number: int, mark: str) -> Card:
         """
         指定したカードのサーチ
         :param number: 指定するカードの数字

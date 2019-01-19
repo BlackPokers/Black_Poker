@@ -1,7 +1,7 @@
-from . import Hand
-from . import Field
-from . import Deck
-from . import Cemetery
+import Hand
+import Field
+import Deck
+import Cemetery
 
 
 class Player:
@@ -31,10 +31,10 @@ class Player:
         :param deck_list: デッキのリスト
         """
 
-        self.hand = Hand()
-        self.field = Field()
-        self.cemetery = Cemetery()
-        self.deck = Deck(deck_list)
+        self.hand = Hand.Hand()
+        self.field = Field.Field()
+        self.cemetery = Cemetery.Cemetery()
+        self.deck = Deck.Deck(deck_list)
         self.deck.shuffle()
         self.can_attack = True
         self.can_draw = 7
