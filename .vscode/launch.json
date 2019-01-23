@@ -5,33 +5,23 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Flask",
+			"name": "Python: Terminal (external)",
 			"type": "python",
 			"request": "launch",
-			"module": "flask",
-			"env": {
-				"FLASK_APP": ".\\Python_Server\\bp\\Server.py",
-				"FLASK_ENV": "development",
-				"FLASK_DEBUG": "0"
-			},
-			"args": [
-				"run",
-				"--no-debugger",
-				"--no-reload"
-			],
-			"jinja": true
+			"program": "${workspaceRoot}\\Python_Server\\bp\\Server.py",
+			"console": "integratedTerminal"
 		},
 		{
 			"type": "firefox",
 			"request": "launch",
 			"name": "Client1",
-			"file": "${workspaceRoot}\\index.html"
+			"file": "${workspaceRoot}\\front\\index.html"
 		},
 		{
 			"type": "firefox",
 			"request": "launch",
 			"name": "Client2",
-			"file": "${workspaceRoot}\\index.html"
+			"file": "${workspaceRoot}\\front\\index.html"
 		},
 		{
             "type": "node",

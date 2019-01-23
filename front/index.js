@@ -203,7 +203,7 @@ function initSocket(){
 	socket.on("attack", function(data){
 		attackcou = data.length;
 		buttleing = data;
-		console.log(data)
+		console.log(data);
 		document.getElementById("Check_diffence").click();
 	});
 
@@ -702,7 +702,7 @@ function turn_end(){//ターンエンド
 
 function cemetery_check(){//墓地確認
 	var mycem = (document.getElementById("cemetery_list").children)[0];
-	mycem.children = null;
+	while (mycem.firstChild) mycem.removeChild(mycem.firstChild);
 	mycem.style.height = "100%";
 	mycem.style.overflow = "scroll";
 	for(var i = 0; i < situation[user]["cemetery"].length; i++){
@@ -770,10 +770,21 @@ function attacking(){
 
 function selectFight(){//アタックするカードの選択
 	console.log(Array.from(selectCard.children).indexOf(this) - 1);
-	if(!checkSelectCard(Array.from(selectCard.children).indexOf(this) - 1) && (Array.from(selectCard.children).indexOf(this) - 1) >= 0){
-		selectList.push(Array.from(selectCard.children).indexOf(this) - 1);
+	var index = Array.from(findCls(selectCard.children, "card")).indexOf(this)
+	if(!checkSelectCard(index) && (index) >= 0){
+		selectList.push(index);
 		//alert(selectList);
 	}
+}
+
+function findCls(selecter, cls){
+	var list = [];
+	for(var i = 0; i < selecter.length; i++){
+		if(selecter[i].className == cls){
+			list.push(selecter[i]);
+		}
+	}
+	return list;
 }
 
 function checkSelectCard(num){
