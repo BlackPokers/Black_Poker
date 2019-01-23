@@ -1,17 +1,16 @@
 import Player
 import Card
-import json
 
 
 class Game:
 
     def __init__(self):
         self.player = [Player.Player(Game.make_start_deck()), Player.Player(Game.make_start_deck())]
-        self.turn = 0
-        self.turn_player = 0
-        self.battler = []
-        self.p_name0 = None
-        self.p_name1 = None
+        self.turn: int = 0
+        self.turn_player: int = 0
+        self.battler: list = []
+        self.p_name0: str = None
+        self.p_name1: str = None
 
     # 防壁の召喚
     def set_barrier(self, length: int):
@@ -28,7 +27,7 @@ class Game:
         self.player[self.turn_player].summon_hero(length, barrier_length1, barrier_length2)
 
     def summon_magician(self, length: int, barrier_length: int, cost_hand_length: int):
-        self.player[self.turn_player].summon_ace(length, cost_hand_length, barrier_length)
+        self.player[self.turn_player].summon_magician(length, cost_hand_length, barrier_length)
 
     # ドロー
     def draw(self):
@@ -49,21 +48,26 @@ class Game:
     def attack(self, lengths: list):
         self.player[self.turn_player].can_attack = False
         attacker = self.player[self.turn_player].declaration_attack(lengths)
+        print(lengths)
 
         for i in range(0, len(attacker)):
+            print("append is")
+            print(attacker[i])
+            print(lengths[i])
             self.battler.append({"attack": {"card": attacker[i], "len": lengths[i]}})
+        print(self.battler)
 
     # 防御
     def defense(self, attack: dict, place: str, lengths: list):
         attack_length = self.search_battler(attack)
 
         if place == "barrier":
-            self.player[1 if self.turn_player == 0 else 0].declaration_defense_barrier(lengths)
+            self.player[1 if self.turn_player == 0 else 0].declaration_defense_barrier(lengths[0])
             self.battler[attack_length]["barrier"] = {
                 "card": self.player[1 if self.turn_player == 0 else 0].field.barrier[lengths[0]],
                 "len": lengths[0]}
         else:
-            self.battler[attack_length].defense = []
+            self.battler[attack_length]["defense"] = []
             for i in range(0, len(lengths)):
                 self.player[1 if self.turn_player == 0 else 0].declaration_defense(lengths[i])
                 self.battler[attack_length]["defense"].append(
@@ -72,8 +76,8 @@ class Game:
 
     def search_battler(self, attack: dict) ->int:
         for i in range(0, len(self.battler)):
-            if self.battler[i].attack.card.mark == attack["card"].mark \
-                    and self.battler[i].attack.card.number == attack["card"].number:
+            if self.battler[i]["attack"]["card"].mark == attack["card"]["mark"] \
+                    and self.battler[i]["attack"]["card"].number == attack["card"]["number"]:
                 return i
 
         return -1
@@ -81,24 +85,25 @@ class Game:
     # バトル
     def battle(self):
         for i in range(0, len(self.battler)):
-            if len(self.battler) > i and self.battler[i] is not None:
-                continue
+            print(isinstance(self.battler[i], dict))
 
-            if self.battler[i].barrier is not None:
-                bool = self.battler[i].barrier.number == self.battler[i].attack.number
+            if isinstance(self.battler[i], dict) and "barrier" in self.battler[i] and self.battler[i]["barrier"] is not None:
+                print("barrier")
+                bool = self.battler[i]["barrier"]["card"].number == self.battler[i]["attack"]["card"].number
 
                 if bool:
-                    self.player[self.turn_player].destruction("soldier", self.battler[i].attack.len)
+                    self.player[self.turn_player].destruction("soldier", self.battler[i]["attack"]["len"])
 
                 self.player[1 if self.turn_player == 0 else 0].destruction("barrier", self.battler[i]["barrier"]["len"])
 
-            elif self.battler[i]["defense"] is not None:
+            elif isinstance(self.battler[i], dict) and "defense" in self.battler[i] and self.battler[i]["defense"] is not None:
+                print("defense")
                 num_atk = self.battler[i]["attack"]["card"].attack
                 num_dfc = 0
 
                 for j in range(0, len(self.battler[i]["defense"])):
                     num_dfc += self.player[1 if self.turn_player == 0 else 0].field.soldier[
-                        self.battler[i]["defense"][i].len.attack]
+                        self.battler[i]["defense"][i]["len"]].attack
 
                 if num_atk == num_dfc:
                     self.player[self.turn_player].destruction("soldier", self.battler[i]["attack"]["len"])
@@ -115,7 +120,8 @@ class Game:
                     self.player[self.turn_player].destruction("soldier", self.battler[i]["attack"]["len"])
 
             else:
-                self.player[1 if self.turn_player == 0 else 0].damage(self.battler[i]["attack"]["card"].attack)
+                print("damage")
+                self.player[1 if self.turn_player == 0 else 0].damages(self.battler[i]["attack"]["card"].attack)
         self.battler = []
 
     @staticmethod
@@ -142,7 +148,7 @@ class Game:
         if num1 == num2:
             return 0
 
-    def first_step(self, p_name0: str, p_name1: str):
+    def first_step(self):
         flag = True
 
         while flag:
@@ -164,24 +170,23 @@ class Game:
                 elif Game.compare_mark(first_mark1, first_mark2) == -1:
                     self.turn_player = 1
                 else:
-                    flag = False
+                    flag = True
 
-        self.p_name0 = p_name0 if self.turn_player == 0 else p_name1
-        self.p_name1 = p_name0 if self.turn_player == 1 else p_name1
+        print(self.turn_player)
+        print(self.p_name0 + " p_name0")
+        print(self.p_name1 + " p_name1")
+        #self.p_name0 = p_name0 if self.turn_player == 0 else p_name1
+        #self.p_name1 = p_name0 if self.turn_player == 1 else p_name1
+        #print(self.p_name0 + " p_name0")
+        #print(self.p_name1 + " p_name1")
 
     @staticmethod
     def make_start_deck() ->list:
         deck = [Card.Card(0, "joker"), Card.Card(0, "joker")]
-        # deck = [json.dumps(Card.Card(0, "joker"), cls=Card.MyJSONEncoder),
-        #        json.dumps(Card.Card(0, "joker"), cls=Card.MyJSONEncoder)]
         for i in range(1, 14):
             deck.append(Card.Card(i, "spade"))
             deck.append(Card.Card(i, "heart"))
             deck.append(Card.Card(i, "diamond"))
             deck.append(Card.Card(i, "clover"))
-            # deck.append(json.dumps(Card.Card(i, "spade"), cls=Card.MyJSONEncoder))
-            # deck.append(json.dumps(Card.Card(i, "heart"), cls=Card.MyJSONEncoder))
-            # deck.append(json.dumps(Card.Card(i, "diamond"), cls=Card.MyJSONEncoder))
-            # deck.append(json.dumps(Card.Card(i, "clover"), cls=Card.MyJSONEncoder))
 
         return deck

@@ -1,12 +1,30 @@
 import json
 
 
-class MyJSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, Card):  # Cardは'Card'としてエンコード
-            return 'Card'
-        return super(MyJSONEncoder, self).default(o)  # 他の型はdefaultのエンコード方式を使用
-
+def card_to_json(o):
+    if isinstance(o, Card):  # Cardは'Card'としてエンコード
+        return {
+            "number": o.number,
+            "attack": o.attack,
+            "canAttack": o.can_attack,
+            "isCharge": o.is_charge,
+            "isFront": o.is_front,
+            "mark": o.mark,
+            "job": o.job
+        }
+    elif isinstance(o, list):  # Cardは'Card'としてエンコード
+        tmp = []
+        for i in o:
+            tmp.append(card_to_json(i))
+        return tmp
+    elif isinstance(o, dict):
+        tmp:dict = {}
+        for k, v in o.items():
+            tmp[k] = card_to_json(v)
+            print(tmp[k])
+        return tmp
+    else:
+        return o
 
 class Card:
     """
@@ -55,4 +73,7 @@ class Card:
 
     # カードの数字とマークを返す
     def __str__(self):
+        return "[" + str(self.number) + "," + self.mark + "]"
+
+    def __repr__(self):
         return "[" + str(self.number) + "," + self.mark + "]"

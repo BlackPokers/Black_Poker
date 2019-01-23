@@ -31,13 +31,13 @@ class Player:
         :param deck_list: デッキのリスト
         """
 
-        self.hand = Hand.Hand()
-        self.field = Field.Field()
-        self.cemetery = Cemetery.Cemetery()
-        self.deck = Deck.Deck(deck_list)
+        self.hand: Hand = Hand.Hand()
+        self.field: Field = Field.Field()
+        self.cemetery: Cemetery = Cemetery.Cemetery()
+        self.deck: Deck = Deck.Deck(deck_list)
         self.deck.shuffle()
-        self.can_attack = True
-        self.can_draw = 7
+        self.can_attack: bool = True
+        self.can_draw: int = 7
         for i in range(0, 7):
             self.draw()
 
@@ -70,6 +70,10 @@ class Player:
     def damage(self):
         self.cemetery.add(self.deck.damage())
 
+    def damages(self, num):
+        for i in range(0, num):
+            self.damage()
+
     # 防壁の召喚
     def set_barrier(self, length: int):
         self.damage()
@@ -79,34 +83,42 @@ class Player:
     def summon_soldier(self, hand_length: int, barrier_length: int):
         self.damage()
         self.field.drive("barrier", barrier_length)
-        self.field.summon(self.hand.get(hand_length))
+        card = self.hand.get(hand_length)
+        self.field.summon(card)
 
     # エースの召喚
     def summon_ace(self, hand_length: int):
         self.damage()
-        self.field.summon(self.hand.get(hand_length))
+        card = self.hand.get(hand_length)
+        self.field.summon(card)
 
     # 英雄の召喚
     def summon_hero(self, hand_length: int, barrier_length1: int, barrier_length2: int):
         self.damage()
         self.field.drive("barrier", barrier_length1)
         self.field.drive("barrier", barrier_length2)
-        self.field.summon(self.hand.get(hand_length))
+        card = self.hand.get(hand_length)
+        self.field.summon(card)
 
     # 魔術師の召喚
     def summon_magician(self, hand_length: int, cost_hand_length: int, barrier_length: int):
         self.field.drive("barrier", barrier_length)
         if hand_length > cost_hand_length:
-            self.field.summon(self.hand.get(hand_length))
+            card = self.hand.get(hand_length)
+            self.field.summon(card)
             self.cemetery.add(self.hand.get(cost_hand_length))
         else:
             self.cemetery.add(self.hand.get(cost_hand_length))
-            self.field.summon(self.hand.get(hand_length))
+            card = self.hand.get(hand_length)
+            self.field.summon(card)
 
     # 攻撃する兵士のリストを返す
     def declaration_attack(self, soldier_length: list) ->list:
         attacker = []
+        # print(len(soldier_length) - 1)
+        # print(len(self.field.soldier))
         for i in range(0, len(soldier_length)):
+            # print(soldier_length[i])
             if self.field.soldier[soldier_length[i]].can_attack:
                 attacker.append(self.field.soldier[soldier_length[i]])
                 self.field.drive("soldier", soldier_length[i])
@@ -116,7 +128,7 @@ class Player:
     # 世代交代
     def alternation(self):
         while True:
-            card = self.deck.get()
+            card = self.deck.get_top()
             if card.number == 0 or card.number == 1 or (11 <= card.number <= 13):
                 break
 
@@ -134,10 +146,12 @@ class Player:
     # 兵士でブロック(複数可)
     def declaration_defense(self, soldier_length: list) ->int:
         num = 0
-        for i in range(0, len(soldier_length)):
-            self.field.drive("soldier", soldier_length[i])
-            num += self.field.soldier[soldier_length[i]].number
-
+        if isinstance(soldier_length, list):
+            for i in range(0, len(soldier_length)):
+                self.field.drive("soldier", soldier_length[i])
+                num += self.field.soldier[soldier_length[i]].number
+        elif isinstance(soldier_length, int):
+            num += soldier_length
         return num
 
     # 防壁でブロック

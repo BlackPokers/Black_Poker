@@ -15,6 +15,7 @@ class Field:
     # 兵士をフィールドに追加
     def summon(self, card: Card):
         self.soldier.append(card)
+        print(card)
         if card.job == "ace" or card.job == "magician":
             self.soldier[len(self.soldier) - 1].can_attack = True
 

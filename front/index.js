@@ -49,8 +49,8 @@ function initSocket(){
 	});
 
 	socket.on("start", function(){
+	    transition();
 		unlockScreen(lockId);
-		transition();
 		socket.emit("situation", {name: prm});
 		console.log("comp")
 	});
@@ -58,7 +58,7 @@ function initSocket(){
 	socket.on("situation", function(data){
 	    console.log(data)
 		situation = data;
-		console.log("situation_start")
+		console.log(datas)
 		if(data["user_1"]["name"] == datas["name"]){
 			user = "user_1";
 			enemy = "user_2";
@@ -66,11 +66,15 @@ function initSocket(){
 			enemy = "user_1";
 			user = "user_2";
 		}
+		myhandDraw();
+		enehandDraw();
+		fielddraw();
 		if(start){
 			start = false;
 			var cardImg = document.createElement("img");
 			var my_cemetery = document.getElementById("my_cemetery");
 			var ene_cemetery = document.getElementById("ene_cemetery");
+			console.log(my_cemetery)
 			cardImg.src = "./img/cover.jpg";
 			cardImg.style.width = "94px";
 			cardImg.style.height = "167px";
@@ -86,18 +90,15 @@ function initSocket(){
 			ene_cemetery.appendChild(cardImg);
 			load();
 			MainGame();
-		}else{
-			myhandDraw();
-			enehandDraw();
-			fielddraw();
 		}
 		console.log("situation_comp")
 	});
 
-	socket.on("myTurn", function(){
+	socket.on("myTurn", function(data){
 		turn = 1;
 		setBarrierCount = 1;
-		myhandDraw();
+		if(data == null || data == undefined)
+    		myhandDraw();
 		console.log("myTurn_comp")
 	});
 
@@ -139,6 +140,8 @@ function initSocket(){
 		cardImg.style.height = "167px";
 		cardImg.style.margin = "0px, 94px, 0px, 0px";
 		cardImg.style.float = "right";
+		console.log(enemy)
+		console.log(data.card)
 		enemyField.appendChild(cardImg);
 		situation[enemy]["soldier"].push(data.card);
 	});
@@ -177,7 +180,11 @@ function initSocket(){
 	});
 
 	socket.on("chargeAll", function(){
+	    var eneSoldier = document.getElementById("enemyBattleField");
 		var eneBarrier = document.getElementById("enemyBarrierField");
+		for(var i = 0; i < eneSoldier.children.length; i++){
+			eneSoldier.children[i].style.transform = "rotate(0deg)";
+		}
 		for(var i = 0; i < eneBarrier.children.length; i++){
 			eneBarrier.children[i].style.transform = "rotate(0deg)";
 		}
@@ -196,7 +203,13 @@ function initSocket(){
 	socket.on("attack", function(data){
 		attackcou = data.length;
 		buttleing = data;
+		console.log(data)
 		document.getElementById("Check_diffence").click();
+	});
+
+	socket.on("enemyDraw", function(){
+	    situation[enemy].hand.push(situation[enemy].deck.shift());
+	    enehandDraw();
 	});
 
 
@@ -297,10 +310,14 @@ function unlockScreen(id){//灰色をなおすそれ
 }
 
 function chargeAll(){
-	socket.emit("chargeAll");
+	socket.emit("chargeAll", {name: prm});
 	var myBarrier = document.getElementById("My_barrier");
+	var mySoldier = document.getElementById("My_BattleField");
 	for(var i = 0; i < myBarrier.children.length; i++){
 		myBarrier.children[i].style.transform = "rotate(0deg)";
+	}
+	for(var i = 0; i < mySoldier.children.length; i++){
+		mySoldier.children[i].style.transform = "rotate(0deg)";
 	}
 }
 
@@ -312,6 +329,7 @@ function transition(){//画面遷移(笑)
 		type: "GET",
 		url: "BlackPoker.html",
 		dataType: "html",
+		async:false,
 		success: function(data){
 			var doc = (new DOMParser()).parseFromString(data, "text/html");
 			var child = Array.from(doc.body.children);
@@ -327,6 +345,9 @@ function transition(){//画面遷移(笑)
 			document.getElementsByTagName("head")[0].appendChild(elemnt);
 		}
 	});
+
+	var mycem = (document.getElementById("cemetery_list").children)[0];
+	console.log(mycem.style);
 }
 
 function MainGame(){
@@ -349,6 +370,7 @@ function cleanUp(id){
 }
 
 function myhandDraw(){//手札の描画(再描画)
+    console.log(situation[user]);
 	var myhand = document.getElementById("My_hand");
 	myhand.textContent = null;
 
@@ -386,7 +408,7 @@ function myhandDraw(){//手札の描画(再描画)
 	}
 }
 
-function enehandDraw(){//相手手札の描画(描画)
+function enehandDraw(){//相手手札の描画(再描画)
 	var cardImg;
 	var enemyhand = document.getElementById("Enemy_hand");
 	enemyhand.textContent = null;
@@ -446,7 +468,8 @@ function battle_drop(e, its){//バトルフィールドへのドロップ
 		dataCpy.classList.remove("move");
 		its.children[0].appendChild(dataCpy);
 		socket.emit("summon", {
-			handLength: holder
+			handLength: holder,
+			name: prm
 		});
 		situation[user]["soldier"].push(situation[user]["hand"][holder]);
 		situation[user]["hand"].splice(holder, 1);
@@ -548,7 +571,8 @@ function selectEnd(){//選択の終了からの召喚
 				socket.emit("summon", {
 					handLength: holder,
 					costLength: selected2,
-					barrierLength: selected1
+					barrierLength: selected1,
+					name: prm
 				});
 				situation[user]["soldier"].push(situation[user]["hand"][holder]);
 				situation[user]["soldier"].push(situation[user]["cemetery"][selected2]);
@@ -588,7 +612,8 @@ function selectEnd(){//選択の終了からの召喚
 			if(selected1 != undefined && selected2 != undefined){
 				socket.emit("summon", {
 					handLength: holder,
-					barrierLength: [selected1, selected2]
+					barrierLength: [selected1, selected2],
+					name: prm
 				});
 				situation[user]["soldier"].push(situation[user]["hand"][holder]);
 				situation[user]["hand"].splice(holder, 1);
@@ -613,7 +638,8 @@ function selectEnd(){//選択の終了からの召喚
 			if(myBarrier.children.length != 0){
 				socket.emit("summon", {
 					handLength: holder,
-					barrierLength: selected1
+					barrierLength: selected1,
+					name: prm
 				});
 				//console.log(handList);
 				situation[user]["soldier"].push(situation[user]["hand"][holder]);
@@ -667,7 +693,7 @@ function disHand(){
 	}
 }
 
-function turn_end(){
+function turn_end(){//ターンエンド
 	if(turn == 1){
 		socket.emit("turnEnd", {name: prm});
 		turn = 0;
@@ -676,7 +702,9 @@ function turn_end(){
 
 function cemetery_check(){//墓地確認
 	var mycem = (document.getElementById("cemetery_list").children)[0];
-	mycem.textContent = null;
+	mycem.children = null;
+	mycem.style.height = "100%";
+	mycem.style.overflow = "scroll";
 	for(var i = 0; i < situation[user]["cemetery"].length; i++){
 		var cardImg = document.createElement("img");
 		cardImg.src = "./img/" + situation[user]["cemetery"][i].mark + situation[user]["cemetery"][i].number + ".jpg";
@@ -687,7 +715,8 @@ function cemetery_check(){//墓地確認
 		mycem.appendChild(cardImg);
 	}
 }
-function barrier_check(){//墓地確認
+
+function barrier_check(){
 	var mybr = (document.getElementById("barrier_list").children)[0];
 	mybr.textContent = null;
 	for(var i = 0; i < situation[user]["barrier"].length; i++){
@@ -756,7 +785,7 @@ function checkSelectCard(num){
 }
 
 function buttle(){
-	socket.emit("attack", {lengths: selectList});
+	socket.emit("attack", {lengths: selectList, name: prm});
 	flag2 = true;
 	console.log(selectList);
 	var actionChild = document.getElementById("action");
@@ -805,7 +834,7 @@ function checkSelectCard2(num){
 	}
 	return flag;
 }
-function diffence_on(attack){
+function diffence_on(attack){//攻撃してきた兵士の表示
 	var cardImg = document.createElement("img");
 	//console.log(situation[enemy]["soldier"]);
 	//console.log(attack.len);
@@ -820,8 +849,7 @@ function diffence_on(attack){
 	actionChild.insertBefore(cardImg, actionChild.firstChild);
 }
 
-function diffence_barrier(){
-	
+function diffence_barrier(){//防壁でブロックするときの処理
 	var actionChild = document.getElementById("Daction");
 	selectCard = actionChild;
 	for(var i = 0; i < actionChild.children.length; i++){
@@ -850,8 +878,8 @@ function diffence_barrier(){
 	selectList3 = [];
 }
 
-function defbuttle(){//兵士がブロックした際の処理
-	socket.emit("diffence", {attack: buttleing[attackcou].attack, place: "soldier", lengths:selectList3});
+function defbuttle(){
+	socket.emit("defence", {attack: buttleing[attackcou].attack, place: "soldier", lengths:selectList3, name: prm});
 	console.log({attack: buttleing[attackcou].attack, place: "soldier", lengths:selectList3});
 	var actionChild = document.getElementById("Daction");
 	for(var i = 0; i < actionChild.children.length; i++){
@@ -867,7 +895,7 @@ function defbuttle(){//兵士がブロックした際の処理
 }
 
 function defbuttlebarr(){//兵士がブロックした際の処理
-	socket.emit("diffence", {attack: buttleing[attackcou].attack, place: "barrier", lengths:selectList3});
+	socket.emit("defence", {attack: buttleing[attackcou].attack, place: "barrier", lengths:selectList3, name: prm});
 	console.log({attack: buttleing[attackcou].attack, place: "barrier", lengths:selectList3});
 	var actionChild = document.getElementById("Daction");
 	for(var i = 0; i < actionChild.children.length; i++){
@@ -881,7 +909,7 @@ function defbuttlebarr(){//兵士がブロックした際の処理
 	selectList3 = [];
 }
 
-function diffence(){
+function diffence(){//兵士がブロックしてきたときの処理
 	var actionChild = document.getElementById("Daction");
 	selectCard = actionChild;
 	for(var i = 0; i < actionChild.children.length; i++){
@@ -973,11 +1001,13 @@ function modalfunc(modalwindow, overlay, open){
 		//console.log(document.getElementById(modalwindow.slice(1)));
 		//console.log(document.getElementById(modalwindow.slice(1)).style.display);
 		if($(event.target).closest(overlay).length && document.getElementById(modalwindow.slice(1)).style.display != "none" && document.getElementById(modalwindow.slice(1)).style.display != ""){
+			console.log("out")
 			$(overlay + ", " + modalwindow).fadeOut();
 			if(attackcou >= 1){
 				modal_on();
 			}else{
-				socket.emit("diffence_end");
+			    console.log("defence_end")
+				socket.emit("defence_end", {name: prm});
 				//alert("diff end");
 			}
 		}

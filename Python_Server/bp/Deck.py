@@ -51,6 +51,7 @@ class Deck:
         """
         デッキのシャッフル
         """
+        random.seed()
         random.shuffle(self.card_list)
 
     # デッキからカードサーチ

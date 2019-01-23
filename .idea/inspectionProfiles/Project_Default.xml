@@ -21,6 +21,8 @@
           <option value="Field" />
           <option value="Deck" />
           <option value="Cemetery" />
+          <option value="CardJSONEncoder" />
+          <option value="card_to_json" />
         </list>
       </option>
     </inspection_tool>
