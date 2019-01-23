@@ -167,7 +167,7 @@ class Player:
         self.cemetery.add(self.hand.get(cost_length))
         self.cemetery.add(self.hand.get(hand_length))
 
-    def twice_spell(self, hand_lengths: int):
+    def twice_spell(self, hand_lengths: list):
         self.cemetery.add(self.hand.get(hand_lengths[0]))
         self.cemetery.add(self.hand.get(hand_lengths[1]))
 
@@ -191,7 +191,7 @@ class Player:
     def counter(self, hand_length, cost_length):
         self.once_spell(hand_length, cost_length)
 
-    def barrier_defense(self, hand_length: int, player: bool, length: int):
+    def barrier_defense(self, hand_length: list, player: bool, length: int):
         if player:
             self.destruction("barrier", length)
 

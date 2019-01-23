@@ -5,6 +5,7 @@ from flask import Flask
 from flask_socketio import SocketIO, emit, join_room
 from Card import card_to_json
 
+
 class wrapInt:
     def __init__(self, n: int):
         self.a = n
@@ -17,6 +18,7 @@ class wrapInt:
 
     def reset(self):
         self.a = 0
+
 
 # 非同期処理に使用するライブラリの指定
 # `threading`, `eventlet`, `gevent`から選択可能
@@ -41,7 +43,6 @@ g: Game = Game.Game()
 game_list = [g]
 
 
-
 @socketio.on('my_event', namespace='/websocket')
 def test_connect(data):
     # print("connect!")
@@ -53,45 +54,47 @@ def test_connect(data):
 def con_connect():
     pass
     # print("connect")
-    #if num.count() == 2:
+    # if num.count() == 2:
     #    num.inc()
     #    num.reset()
-    #num.count_up()
-    ## print(num.get())
-    #join_room(str(num.get()))
-    #emit('my response', {'data': str(num.get())}, room=str(num.get()))
+    # num.count_up()
+    # print(num.get())
+    # join_room(str(num.get()))
+    # emit('my response', {'data': str(num.get())}, room=str(num.get()))
 
 
 def get_keys_from_value(d: dict, val, key: str):
     return [k for k, v in d.items() if v == val and key != k]
 
 
-def judge(number: int, e_room:str, m_room:str):
-    if len(game_list[number].player[0].deck.card_list) <= 0:
+def judge(number: int, e_room: str, m_room: str):
+    game: Game = game_list[number]
+    if len(game.player[0].deck.card_list) <= 0:
         emit("fin", 1, room=e_room)
         emit("fin", 1, room=m_room)
-    elif len(game_list[number].player[1].deck.card_list) <= 0:
+    elif len(game.player[1].deck.card_list) <= 0:
         emit("fin", 0, room=e_room)
         emit("fin", 0, room=m_room)
 
 
 def situationF5(m_room: str, e_room: str):
     game_num = ID[m_room]
+    game:Game = game_list[game_num]
     d = {
-        "user_1": {"id": game_list[game_num].p_name0,
-                   "name": game_list[game_num].p_name0,
-                   "hand": card_to_json(game_list[game_num].player[0].hand.card_list),
-                   "deck": card_to_json(game_list[game_num].player[0].deck.card_list),
-                   "cemetery": card_to_json(game_list[game_num].player[0].cemetery.card_list),
-                   "barrier": card_to_json(game_list[game_num].player[0].field.barrier),
-                   "soldier": card_to_json(game_list[game_num].player[0].field.soldier)},
-        "user_2": {"id": game_list[game_num].p_name1,
-                   "name": game_list[game_num].p_name1,
-                   "hand": card_to_json(game_list[game_num].player[1].hand.card_list),
-                   "deck": card_to_json(game_list[game_num].player[1].deck.card_list),
-                   "cemetery": card_to_json(game_list[game_num].player[1].cemetery.card_list),
-                   "barrier": card_to_json(game_list[game_num].player[1].field.barrier),
-                   "soldier": card_to_json(game_list[game_num].player[1].field.soldier)}
+        "user_1": {"id": game.p_name0,
+                   "name": game.p_name0,
+                   "hand": card_to_json(game.player[0].hand.card_list),
+                   "deck": card_to_json(game.player[0].deck.card_list),
+                   "cemetery": card_to_json(game.player[0].cemetery.card_list),
+                   "barrier": card_to_json(game.player[0].field.barrier),
+                   "soldier": card_to_json(game.player[0].field.soldier)},
+        "user_2": {"id": game.p_name1,
+                   "name": game.p_name1,
+                   "hand": card_to_json(game.player[1].hand.card_list),
+                   "deck": card_to_json(game.player[1].deck.card_list),
+                   "cemetery": card_to_json(game.player[1].cemetery.card_list),
+                   "barrier": card_to_json(game.player[1].field.barrier),
+                   "soldier": card_to_json(game.player[1].field.soldier)}
     }
 
     emit("situation", d, room=e_room)
@@ -115,7 +118,7 @@ def login(data):
         game_list[table_number.get()].p_name1 = data["name"]
         game_list[table_number.get()].first_step()
 
-        game_num = ID[data["name"]]                                  # ゲーム番号を取得
+        game_num = ID[data["name"]]  # ゲーム番号を取得
         room_name = get_keys_from_value(ID, game_num, data["name"])[0]  # dictionary内を検索
         emit("start", room=data["name"])
         emit("start", room=room_name)
@@ -133,18 +136,19 @@ def situation(data):
     game_num = ID[data["name"]]
     # print(game_list[game_num].p_name0)
     # print(game_list[game_num].p_name1)
-    emit("situation", {"user_1": {"id": game_list[game_num].p_name0,
-                                  "name": game_list[game_num].p_name0,
-                                  "hand": card_to_json(game_list[game_num].player[0].hand.card_list),
-                                  "deck": card_to_json(game_list[game_num].player[0].deck.card_list),
-                                  "cemetery": card_to_json(game_list[game_num].player[0].cemetery.card_list),
+    game:Game = game_list[game_num]
+    emit("situation", {"user_1": {"id": game.p_name0,
+                                  "name": game.p_name0,
+                                  "hand": card_to_json(game.player[0].hand.card_list),
+                                  "deck": card_to_json(game.player[0].deck.card_list),
+                                  "cemetery": card_to_json(game.player[0].cemetery.card_list),
                                   "barrier": [],
                                   "soldier": []},
-                       "user_2": {"id": game_list[game_num].p_name1,
-                                  "name": game_list[game_num].p_name1,
-                                  "hand": card_to_json(game_list[game_num].player[1].hand.card_list),
-                                  "deck": card_to_json(game_list[game_num].player[1].deck.card_list),
-                                  "cemetery": card_to_json(game_list[game_num].player[1].cemetery.card_list),
+                       "user_2": {"id": game.p_name1,
+                                  "name": game.p_name1,
+                                  "hand": card_to_json(game.player[1].hand.card_list),
+                                  "deck": card_to_json(game.player[1].deck.card_list),
+                                  "cemetery": card_to_json(game.player[1].cemetery.card_list),
                                   "barrier": [],
                                   "soldier": []}
                        }, room=data["name"])
@@ -157,11 +161,12 @@ def turn_end(data):
     game_num = ID[data["name"]]
     room_name = get_keys_from_value(ID, game_num, data["name"])[0]
 
-    game_list[game_num].end()
+    game: Game = game_list[game_num]
+    game.end()
     emit("turnEnd", room=room_name)
     situationF5(room_name, data["name"])
-    game_list[game_num].starting()
-    game_list[game_num].draw()
+    game.starting()
+    game.draw()
     emit("draw", room=room_name)
     emit("enemyDraw", room=data["name"])
     judge(game_num, room_name, data["name"])
@@ -171,12 +176,14 @@ def turn_end(data):
 def set_barrier(data):
     game_num = ID[data["name"]]
     room_name = get_keys_from_value(ID, game_num, data["name"])[0]
+    game:Game = game_list[game_num]
     emit("setBarrier",
-         {"card": card_to_json(game_list[game_num].player[game_list[game_num].turn_player].hand.card_list[data["handLength"]])},
+         {"card": card_to_json(
+             game.player[game.turn_player].hand.card_list[data["handLength"]])},
          room=room_name)
     emit("damage", 1, room=room_name)
     emit("handDecrease", {"len": data["handLength"]}, room=room_name)
-    game_list[game_num].set_barrier(data["handLength"])
+    game.set_barrier(data["handLength"])
     judge(game_num, room_name, data["name"])
     situationF5(room_name, data["name"])
 
@@ -218,7 +225,8 @@ def summon(data: dict):
 def charge_all(data):
     game_num = ID[data["name"]]
     room_name = get_keys_from_value(ID, game_num, data["name"])[0]
-    game_list[game_num].player[game_list[game_num].turn_player].field.charge_all()
+    game: Game = game_list[game_num]
+    game.player[game_list[game_num].turn_player].field.charge_all()
     emit("chargeAll", room=room_name)
 
 
@@ -242,19 +250,20 @@ def attack(data):
 @socketio.on("defence", namespace="/websocket")
 def defence(data):
     game_num = ID[data["name"]]
-    game_list[game_num].defense(data["attack"], data["place"], data["lengths"])
+    game: Game = game_list[game_num]
+    game.defense(data["attack"], data["place"], data["lengths"])
 
 
 @socketio.on("defence_end", namespace="/websocket")
 def defence_end(data):
     game_num = ID[data["name"]]
     room_name = get_keys_from_value(ID, game_num, data["name"])[0]
-    game_list[game_num].battle()
+    game: Game = game_list[game_num]
+    game.battle()
     judge(game_num, room_name, data["name"])
     situationF5(data["name"], room_name)
-    print(game_list[game_num].player[0].cemetery.card_list)
-    print(game_list[game_num].player[1].cemetery.card_list)
+    print(game.player[0].cemetery.card_list)
+    print(game.player[1].cemetery.card_list)
 
 
-socketio.run(app, debug=True)
-
+socketio.run(app, debug=True, host='0.0.0.0')
