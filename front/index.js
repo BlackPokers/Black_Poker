@@ -27,7 +27,7 @@ var buttleing;
 var flag2 = false;
 
 function initSocket(){
-	socket = io.connect("ws://localhost:5000/websocket");
+	socket = io.connect("ws://172.20.10.3:5000/websocket");
 
 	// 接続時にソケットIDをサーバから取得する
 
@@ -49,16 +49,16 @@ function initSocket(){
 	});
 
 	socket.on("start", function(){
-	    transition();
+		transition();
 		unlockScreen(lockId);
 		socket.emit("situation", {name: prm});
 		console.log("comp")
 	});
 
 	socket.on("situation", function(data){
-	    console.log(data)
+		console.log(data);
 		situation = data;
-		console.log(datas)
+		console.log(datas);
 		if(data["user_1"]["name"] == datas["name"]){
 			user = "user_1";
 			enemy = "user_2";
@@ -98,7 +98,7 @@ function initSocket(){
 		turn = 1;
 		setBarrierCount = 1;
 		if(data == null || data == undefined)
-    		myhandDraw();
+			myhandDraw();
 		console.log("myTurn_comp")
 	});
 
@@ -115,7 +115,7 @@ function initSocket(){
 	});
 
 	socket.on("damage", function(dama){
-		alert("相手は" + dama + "ダメージを受けた。");
+		//alert("相手は" + dama + "ダメージを受けた。");
 		situation[enemy].cemetery.push(situation[enemy].deck.shift());
 	});
 
@@ -180,12 +180,12 @@ function initSocket(){
 	});
 
 	socket.on("chargeAll", function(){
-	    var eneSoldier = document.getElementById("enemyBattleField");
+		var eneSoldier = document.getElementById("enemyBattleField");
 		var eneBarrier = document.getElementById("enemyBarrierField");
 		for(var i = 0; i < eneSoldier.children.length; i++){
 			eneSoldier.children[i].style.transform = "rotate(0deg)";
 		}
-		for(var i = 0; i < eneBarrier.children.length; i++){
+		for(i = 0; i < eneBarrier.children.length; i++){
 			eneBarrier.children[i].style.transform = "rotate(0deg)";
 		}
 	});
@@ -208,8 +208,8 @@ function initSocket(){
 	});
 
 	socket.on("enemyDraw", function(){
-	    situation[enemy].hand.push(situation[enemy].deck.shift());
-	    enehandDraw();
+		situation[enemy].hand.push(situation[enemy].deck.shift());
+		enehandDraw();
 	});
 
 
@@ -316,7 +316,7 @@ function chargeAll(){
 	for(var i = 0; i < myBarrier.children.length; i++){
 		myBarrier.children[i].style.transform = "rotate(0deg)";
 	}
-	for(var i = 0; i < mySoldier.children.length; i++){
+	for(i = 0; i < mySoldier.children.length; i++){
 		mySoldier.children[i].style.transform = "rotate(0deg)";
 	}
 }
@@ -354,7 +354,7 @@ function MainGame(){
 	cleanUp(datas["name"]);
 
 	if(turn == 0){
-		window.alert("後攻");
+		//window.alert("後攻");
 	}
 	else{
 		window.alert("先攻");
@@ -450,7 +450,7 @@ function barrier_drop(e, its){//防壁の召喚
 		damage();
 	}else if(holder == -1);
 	else{
-		window.alert("防壁はターン1行動です");
+		//window.alert("防壁はターン1行動です");
 	}
 }
 
@@ -664,7 +664,7 @@ function selectEnd(){//選択の終了からの召喚
 		}
 	}
 	else{
-		alert("払えクソガキ");
+		alert("張っ倒すぞ");
 	}
 
 	document.getElementById("Select_end").style.border = "none";
@@ -761,6 +761,8 @@ function attacking(){
 	}
 	var button = document.createElement("button");
 	button.className = "button";
+	button.style.width = "45px";
+	button.style.height = "10px";
 	button.onclick = buttle;
 	actionChild.appendChild(button);
 
@@ -872,6 +874,8 @@ function diffence_barrier(){//防壁でブロックするときの処理
 		actionChild.children[i].addEventListener("click", selectDiffence, false);
 	}
 	var button = document.createElement("button");
+	button.style.width = "45px";
+	button.style.height = "10px";
 	button.onclick = defbuttlebarr;
 	button.className = "card";
 	actionChild.appendChild(button);
@@ -931,11 +935,18 @@ function diffence(){//兵士がブロックしてきたときの処理
 		actionChild.children[i].addEventListener("click", selectDiffence, false);
 	}
 	var button = document.createElement("button");
+	button.style.width = "45px";
+	button.style.height = "10px";
 	button.onclick = defbuttle;
 	button.className = "card";
 	actionChild.appendChild(button);
 	selectList3 = [];
 }
+
+function magic(){
+
+}
+
 
 //モーダル
 
@@ -944,8 +955,8 @@ function modal(modalwindow, overlay, open){
 		console.log(modalwindow);
 		console.log(flag2);
 		//if(!(flag2 && modalwindow == "#action")){
-			$(overlay).fadeIn();
-			$(modalwindow).fadeIn();
+		$(overlay).fadeIn();
+		$(modalwindow).fadeIn();
 		//}
 	});
 
@@ -1006,7 +1017,7 @@ function modalfunc(modalwindow, overlay, open){
 			if(attackcou >= 1){
 				modal_on();
 			}else{
-			    console.log("defence_end")
+				console.log("defence_end")
 				socket.emit("defence_end", {name: prm});
 				//alert("diff end");
 			}

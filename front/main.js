@@ -279,7 +279,7 @@ function dragenter(e){
 		}
 		else{
 			canDrop = 0;
-			console.log("can"t summonSoldier");
+			console.log("can't summonSoldier");
 			e.dataTransfer.dropEffect = "none";
 			console.log(dragcard);
 			console.log(dragcard.draggable);
@@ -292,7 +292,7 @@ function dragenter(e){
 		}
 		else{
 			canDrop = 0;
-			console.log("can"t summonHero");
+			console.log("can't summonHero");
 			e.dataTransfer.dropEffect = "none";
 		}
 	}
