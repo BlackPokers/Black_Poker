@@ -15,8 +15,6 @@ class Game:
         self.battler: List = []
         self.p_name0: str = None
         self.p_name1: str = None
-        """: :type: List[Player]"""
-        self.player[0]
 
     # 防壁の召喚
     def set_barrier(self, length: int):
@@ -76,6 +74,7 @@ class Game:
             self.battler[attack_length]["defense"] = []
             for i in range(0, len(lengths)):
                 self.player[1 if self.turn_player == 0 else 0].declaration_defense(lengths[i])
+                print(lengths[i])
                 self.battler[attack_length]["defense"].append(
                     {"card": self.player[1 if self.turn_player == 0 else 0].field.soldier[lengths[i]],
                      "len": lengths[i]})
@@ -199,13 +198,13 @@ class Game:
 
         return deck
 
-    def up(self, player: int, hand_length: int, cost_length: int, length: int):
-        pass
+    def up(self, player: int, spell_index: int, cost_index: int, target: int):
+        self.player[player].up(spell_index, cost_index, target)
 
-    def down(self, hand_length: int, cost_length: int) ->int:
-        num = self.hand.card_list[hand_length].number
-        self.once_spell(hand_length, cost_length)
-        return num
+    def down(self, player1: int, player2, hand_index: int, cost_index: int, target: int):
+        print("down")
+        num = self.player[player1].down(hand_index, cost_index)
+        self.player[player2].field.soldier[target].attack -= num
 
     def twist(self, hand_length: int, cost_length: int, player: bool, length: int):
         if player:
