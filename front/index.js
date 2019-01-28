@@ -21,13 +21,17 @@ var selectCard;
 var selectList = [];
 var selectList2 = [];
 var selectList3 = [];
+var mSelectList = [];
+var mSelectList2 = [];
+var mSelectList3 = [];
 var start = true;
 var attackcou = 0;
 var buttleing;
 var flag2 = false;
+var obj;
 
 function initSocket(){
-	socket = io.connect("ws://172.20.10.3:5000/websocket");
+	socket = io.connect("ws://localhost:5000/websocket");
 
 	// 接続時にソケットIDをサーバから取得する
 
@@ -164,7 +168,8 @@ function initSocket(){
 		cardImg.className = "move";
 		myhand.appendChild(cardImg);
 		handList.push(cardImg);
-		handList[handList.length - 1].addEventListener("dragstart", function(e){//ドラッグ開始時
+		//ドラッグ開始時
+		handList[handList.length - 1].addEventListener("dragstart", function(e){
 			if(turn == 1){
 				this.classList.add("drag");
 				e.dataTransfer.setData("text", e.target.classList);//データの保持
@@ -173,7 +178,8 @@ function initSocket(){
 			}
 		}, false);
 
-		handList[handList.length - 1].addEventListener("dragend", function(e){//ドラッグ終了時
+		//ドラッグ終了時
+		handList[handList.length - 1].addEventListener("dragend", function(e){
 			e.preventDefault();
 			this.classList.remove("drag");
 		}, false);
@@ -215,13 +221,27 @@ function initSocket(){
 
 }
 
+function signUp(){
+	socket = io.connect("ws://172.20.10.3:5000/http");
 
-function fielddraw(){//バトルフィールドの描画(再描画)
+	var name = document.getElementById("sign").value;
+	// 接続時にソケットIDをサーバから取得する
+
+	console.log(name);
+
+	socket.on("connect", function (data){
+		socket.emit("signUp", {id: name});
+	});
+}
+
+//バトルフィールドの描画(再描画)
+function fielddraw(){
 	var mybuttle = document.getElementById("My_BattleField");
 	mybuttle.textContent = null;
 	//console.log(situation);
 
-	for(var i = 0; i < situation[user]["soldier"].length; i++){//自分の兵士の描画
+	//自分の兵士の描画
+	for(var i = 0; i < situation[user]["soldier"].length; i++){
 		var cardImg = document.createElement("img");
 		cardImg.src = "./img/" + situation[user]["soldier"][i].mark + situation[user]["soldier"][i].number + ".jpg";
 		cardImg.style.width = "94px";
@@ -237,7 +257,8 @@ function fielddraw(){//バトルフィールドの描画(再描画)
 	var enebuttle = document.getElementById("enemyBattleField");
 	enebuttle.textContent = null;
 
-	for(i = 0; i < situation[enemy]["soldier"].length; i++){//相手の兵士の描画
+	//相手の兵士の描画
+	for(i = 0; i < situation[enemy]["soldier"].length; i++){
 		cardImg = document.createElement("img");
 		cardImg.src = "./img/" + situation[enemy]["soldier"][i].mark + situation[enemy]["soldier"][i].number + ".jpg";
 		cardImg.style.width = "94px";
@@ -253,7 +274,8 @@ function fielddraw(){//バトルフィールドの描画(再描画)
 	var mybarrier = document.getElementById("My_barrier");
 	mybarrier.textContent = null;
 
-	for(i = 0; i < situation[user]["barrier"].length; i++){//自分の防壁(ry
+	//自分の防壁の描画
+	for(i = 0; i < situation[user]["barrier"].length; i++){
 		cardImg = document.createElement("img");
 		cardImg.src = "./img/cover.jpg";
 		cardImg.style.width = "94px";
@@ -269,7 +291,8 @@ function fielddraw(){//バトルフィールドの描画(再描画)
 	var enebarrier = document.getElementById("enemyBarrierField");
 	enebarrier.textContent = null;
 
-	for(i = 0; i < situation[enemy]["barrier"].length; i++){//相手の防壁(ry
+	//相手の防壁の描画
+	for(i = 0; i < situation[enemy]["barrier"].length; i++){
 		cardImg = document.createElement("img");
 		cardImg.src = "./img/cover.jpg";
 		cardImg.style.width = "94px";
@@ -289,7 +312,8 @@ function login(){
 	lockScreen(lockId);
 }
 
-function lockScreen(id){//画面をちょっと灰色にするアレ
+//画面をちょっと灰色にするアレ
+function lockScreen(id){
 
 	var divTag = $("<div />").attr("id", id);
 
@@ -305,7 +329,8 @@ function lockScreen(id){//画面をちょっと灰色にするアレ
 	$("body").append(divTag);
 }
 
-function unlockScreen(id){//灰色をなおすそれ
+//灰色をなおすそれ
+function unlockScreen(id){
 	$("#" + id).remove();
 }
 
@@ -321,7 +346,8 @@ function chargeAll(){
 	}
 }
 
-function transition(){//画面遷移(笑)
+//画面遷移(笑)
+function transition(){
 	//alert("success!");
 	document.body.textContent = null;
 	
@@ -350,6 +376,61 @@ function transition(){//画面遷移(笑)
 	console.log(mycem.style);
 }
 
+//画面遷移(笑)
+function toSign(){
+	//alert("success!");
+	document.body.textContent = null;
+	
+	$.ajax({
+		type: "GET",
+		url: "index2.html",
+		dataType: "html",
+		async:false,
+		success: function(data){
+			var doc = (new DOMParser()).parseFromString(data, "text/html");
+			var child = Array.from(doc.body.children);
+			var elemnt = document.createElement("div");
+			for(var i = 0; i < child.length; i++){
+				elemnt.appendChild(child[i]);
+			}
+			document.body.appendChild(elemnt);
+			elemnt = document.createElement("link");
+			elemnt.setAttribute("rel", "stylesheet");
+			elemnt.setAttribute("type", "text/css");
+			elemnt.setAttribute("href", "BlackPoker.css");
+			document.getElementsByTagName("head")[0].appendChild(elemnt);
+		}
+	});
+}
+
+//画面遷移(笑)
+function fromSign(){
+	//alert("success!");
+	document.body.textContent = null;
+	
+	$.ajax({
+		type: "GET",
+		url: "index.html",
+		dataType: "html",
+		async:false,
+		success: function(data){
+			var doc = (new DOMParser()).parseFromString(data, "text/html");
+			var child = Array.from(doc.body.children);
+			var elemnt = document.createElement("div");
+			for(var i = 0; i < child.length; i++){
+				elemnt.appendChild(child[i]);
+			}
+			document.body.appendChild(elemnt);
+			elemnt = document.createElement("link");
+			elemnt.setAttribute("rel", "stylesheet");
+			elemnt.setAttribute("type", "text/css");
+			elemnt.setAttribute("href", "BlackPoker.css");
+			document.getElementsByTagName("head")[0].appendChild(elemnt);
+		}
+	});
+}
+
+
 function MainGame(){
 	cleanUp(datas["name"]);
 
@@ -369,7 +450,8 @@ function cleanUp(id){
 	}
 }
 
-function myhandDraw(){//手札の描画(再描画)
+//手札の描画(再描画)
+function myhandDraw(){
     console.log(situation[user]);
 	var myhand = document.getElementById("My_hand");
 	myhand.textContent = null;
@@ -386,10 +468,12 @@ function myhandDraw(){//手札の描画(再描画)
 	}
 
 	handList = Array.from(document.getElementsByClassName("move"));//配列ライクな何かだった
-	//console.log(handList.length);
-	for(i = 0; i < handList.length; i++){//カードのイベントの追加
 
-		handList[i].addEventListener("dragstart", function(e){//ドラッグ開始時
+	//カードのイベントの追加
+	for(i = 0; i < handList.length; i++){
+
+		//ドラッグ開始時
+		handList[i].addEventListener("dragstart", function(e){
 			if(turn == 1){
 				this.classList.add("drag");
 				e.dataTransfer.setData("text", e.target.classList);//データの保持
@@ -400,7 +484,8 @@ function myhandDraw(){//手札の描画(再描画)
 			}
 		}, false);
 
-		handList[i].addEventListener("dragend", function(e){//ドラッグ終了時
+		//ドラッグ終了時
+		handList[i].addEventListener("dragend", function(e){
 			e.preventDefault();
 			this.classList.remove("drag");
 		}, false);
@@ -408,7 +493,8 @@ function myhandDraw(){//手札の描画(再描画)
 	}
 }
 
-function enehandDraw(){//相手手札の描画(再描画)
+//相手手札の描画(再描画)
+function enehandDraw(){
 	var cardImg;
 	var enemyhand = document.getElementById("Enemy_hand");
 	enemyhand.textContent = null;
@@ -428,7 +514,8 @@ function damage(){
 	situation[user].cemetery.push(situation[user].deck.shift());
 }
 
-function barrier_drop(e, its){//防壁の召喚
+//防壁の召喚
+function barrier_drop(e, its){
 	if(setBarrierCount > 0){
 		e.preventDefault();
 		var data = e.dataTransfer.getData("text");
@@ -454,7 +541,8 @@ function barrier_drop(e, its){//防壁の召喚
 	}
 }
 
-function battle_drop(e, its){//バトルフィールドへのドロップ
+//バトルフィールドへのドロップ
+function battle_drop(e, its){
 	var myBarrier = document.getElementById("My_barrier");
 	//console.log(holder);
 	//console.log(situation);
@@ -463,7 +551,9 @@ function battle_drop(e, its){//バトルフィールドへのドロップ
 	dataCpy = document.getElementsByClassName(data)[0];
 	cardData = myDropCard.number;
 	e.preventDefault();
-	if(myDropCard.number == 1){//エースの召喚
+
+	//エースの召喚
+	if(myDropCard.number == 1){
 		//document.getElementsByClassName(data)[0].classList.remove("move");
 		dataCpy.classList.remove("move");
 		its.children[0].appendChild(dataCpy);
@@ -492,7 +582,8 @@ function allowDrop(e){
 	e.preventDefault();
 }
 
-function selectTime(){//召喚時のコスト支払い
+//召喚時のコスト支払い
+function selectTime(){
 	var myBarrier = document.getElementById("My_barrier").children;
 	for(var i = 0; i < myBarrier.length; i++){
 		myBarrier[i].addEventListener("click", selectBarrier, false);
@@ -501,7 +592,8 @@ function selectTime(){//召喚時のコスト支払い
 	document.getElementById("Select_end").style.overflow = "none";
 }
 
-function selectTime2(){//ジョーカー召喚の儀
+//ジョーカー召喚の儀
+function selectTime2(){
 	var myhand = document.getElementById("My_hand").children;
 	for(var i = 0; i < myhand.length; i++){
 		myhand[i].addEventListener("click", selectHand, false);
@@ -510,7 +602,8 @@ function selectTime2(){//ジョーカー召喚の儀
 	document.getElementById("Select_end").style.overflow = "none";
 }
 
-function selectBarrier(){//召喚時の防壁の選択
+//召喚時の防壁の選択
+function selectBarrier(){
 	var myBarrier = document.getElementById("My_barrier").children;
 	this.classList.add("select");
 	console.log(this);
@@ -556,7 +649,8 @@ function selectHand(){
 	}
 }
 
-function selectEnd(){//選択の終了からの召喚
+//選択の終了からの召喚
+function selectEnd(){
 	var myBarrier = document.getElementById("My_barrier");
 	var myField = document.getElementById("My_BattleField");
 	var myhand = document.getElementById("My_hand");
@@ -672,7 +766,8 @@ function selectEnd(){//選択の終了からの召喚
 	selected2 = undefined;
 }
 
-function tapBarrier(){//防壁のドライブ
+//防壁のドライブ
+function tapBarrier(){
 	var myBarrier = document.getElementById("My_barrier");
 	for(var i = 0; i < Array.from(myBarrier.children).length; i++){//防壁のドライブ
 		myBarrier.children[i].removeEventListener("click", selectBarrier, false);
@@ -693,14 +788,16 @@ function disHand(){
 	}
 }
 
-function turn_end(){//ターンエンド
+//ターンエンド
+function turn_end(){
 	if(turn == 1){
 		socket.emit("turnEnd", {name: prm});
 		turn = 0;
 	}
 }
 
-function cemetery_check(){//墓地確認
+//>墓地確認<
+function cemetery_check(){
 	var mycem = (document.getElementById("cemetery_list").children)[0];
 	while (mycem.firstChild) mycem.removeChild(mycem.firstChild);
 	mycem.style.height = "100%";
@@ -716,6 +813,7 @@ function cemetery_check(){//墓地確認
 	}
 }
 
+//>防壁の確認<
 function barrier_check(){
 	var mybr = (document.getElementById("barrier_list").children)[0];
 	mybr.textContent = null;
@@ -732,16 +830,10 @@ function barrier_check(){
 		mybr.appendChild(cardImg);
 	}
 }
-function load(){
-	modal("#action", "#overlay", "#open");
-	modal("#cemetery_list", "#overlay", "#check_cemetery");
-	modal("#barrier_list", "#overlay", "#check_barrier");
-	modal("#fin", "#overlay", "#fin_b");
-	modalfunc("#Daction", "#overlay", "#Check_diffence");
-}
 
 var actionChild;
 
+//攻撃
 function attacking(){
 	var actionChild = document.getElementById("action");
 	selectCard = actionChild;
@@ -756,9 +848,11 @@ function attacking(){
 		cardImg.className = "card";
 		actionChild.appendChild(cardImg);
 	}
+	//クリックイベントの付加
 	for(i = 0; i < actionChild.children.length; i++){
 		actionChild.children[i].addEventListener("click", selectFight, false);
 	}
+
 	var button = document.createElement("button");
 	button.className = "button";
 	button.style.width = "45px";
@@ -768,15 +862,40 @@ function attacking(){
 
 }
 
-function selectFight(){//アタックするカードの選択
+//アタックするカードの選択
+function selectFight(){
 	console.log(Array.from(selectCard.children).indexOf(this) - 1);
-	var index = Array.from(findCls(selectCard.children, "card")).indexOf(this)
-	if(!checkSelectCard(index) && (index) >= 0){
+	var index = Array.from(findCls(selectCard.children, "card")).indexOf(this);
+	if(!checkSelectCard(index) && (index) >= 0){//同じカードの複数選択を防ぐ
 		selectList.push(index);
-		//alert(selectList);
 	}
 }
 
+//バトル開始
+function buttle(){
+	socket.emit("attack", {lengths: selectList, name: prm});
+	flag2 = true;
+	//console.log(selectList);
+	var actionChild = document.getElementById("action");
+	//console.log("buttle");
+	//console.log(actionChild.children);
+	for(var i = 0; i < actionChild.children.length; i++){
+		//id="action"の子要素をボタン以外全て消す
+		if((actionChild.children[i]).classList.contains("action")){
+			(actionChild.children[i]).style.display = "inline";
+		}else{
+			actionChild.removeChild(actionChild.children[i]);
+			i--;
+			//console.log(i);
+		}
+	}
+	selectList = [];
+	//モーダルの外をクリックしてモーダルを消す
+	document.getElementById("overlay").click();
+	//console.log(actionChild);
+}
+
+//子要素から特定のクラスを持つ要素の抽出
 function findCls(selecter, cls){
 	var list = [];
 	for(var i = 0; i < selecter.length; i++){
@@ -787,6 +906,7 @@ function findCls(selecter, cls){
 	return list;
 }
 
+//同じカードの複数選択を検出
 function checkSelectCard(num){
 	var flag = false;
 	for(var i = 0; i < selectList.length; i++){
@@ -797,47 +917,6 @@ function checkSelectCard(num){
 	return flag;
 }
 
-function buttle(){
-	socket.emit("attack", {lengths: selectList, name: prm});
-	flag2 = true;
-	console.log(selectList);
-	var actionChild = document.getElementById("action");
-	console.log("buttle");
-	console.log(actionChild.children);
-	for(var i = 0; i < actionChild.children.length; i++){
-		console.log(i);
-		console.log((actionChild.childNodes[i]).tagName);
-		if((actionChild.children[i]).classList.contains("action")){
-			(actionChild.children[i]).style.display = "inline";
-		}else{
-			actionChild.removeChild(actionChild.children[i]);
-			i--;
-			console.log(i);
-		}
-	}
-	selectList = [];
-	document.getElementById("overlay").click();
-	//console.log(actionChild);
-}
-
-function selectDiffence(){//ブロックするカードの選択
-
-	console.log(document.getElementById("Daction").children);
-	if(!checkSelectCard2(Array.from(document.getElementById("Daction").children).indexOf(this) - 2) && (Array.from(document.getElementById("Daction").children).indexOf(this) -2) >= 0){
-		selectList3.push(Array.from(document.getElementById("Daction").children).indexOf(this) - 2);
-		//alert(selectList3);
-	}
-}
-/*
-function selectDiffence(){//ブロックするカードの選択
-	if(!checkSelectCard2(Array.from((document.getElementById("Daction")).children).indexOf(this) - 3) && (((document.getElementById("Daction")).children).indexOf(this) - 3) >= 0){
-		selectList2.push(Array.from((document.getElementById("Daction")).children).indexOf(this) - 3);
-		alert(selectList2);
-	}
-
-}
-*/
-
 function checkSelectCard2(num){
 	var flag = false;
 	for(var i = 0; i < selectList3.length; i++){
@@ -847,7 +926,9 @@ function checkSelectCard2(num){
 	}
 	return flag;
 }
-function diffence_on(attack){//攻撃してきた兵士の表示
+
+//攻撃してきた兵士の表示
+function diffence_on(attack){
 	var cardImg = document.createElement("img");
 	//console.log(situation[enemy]["soldier"]);
 	//console.log(attack.len);
@@ -862,7 +943,8 @@ function diffence_on(attack){//攻撃してきた兵士の表示
 	actionChild.insertBefore(cardImg, actionChild.firstChild);
 }
 
-function diffence_barrier(){//防壁でブロックするときの処理
+//防壁でブロックするときの処理
+function diffence_barrier(){
 	var actionChild = document.getElementById("Daction");
 	selectCard = actionChild;
 	for(var i = 0; i < actionChild.children.length; i++){
@@ -881,7 +963,7 @@ function diffence_barrier(){//防壁でブロックするときの処理
 		cardImg.className = "card";
 		actionChild.appendChild(cardImg);
 	}
-	for(i = 0; i < actionChild.children.length; i++){//カードリスト全てにクリックイベントの追加
+	for(i = 0; i < actionChild.children.length; i++){
 		actionChild.children[i].addEventListener("click", selectDiffence, false);
 	}
 	var button = document.createElement("button");
@@ -893,23 +975,8 @@ function diffence_barrier(){//防壁でブロックするときの処理
 	selectList3 = [];
 }
 
-function defbuttle(){
-	socket.emit("defence", {attack: buttleing[attackcou].attack, place: "soldier", lengths:selectList3, name: prm});
-	console.log({attack: buttleing[attackcou].attack, place: "soldier", lengths:selectList3});
-	var actionChild = document.getElementById("Daction");
-	for(var i = 0; i < actionChild.children.length; i++){
-		if((actionChild.children[i]).classList.contains("action")){
-			(actionChild.children[i]).style.display = "inline";
-		}else{
-			actionChild.removeChild(actionChild.children[i]);
-			i--;
-			console.log(i);
-		}
-	}
-	selectList3 = [];
-}
-
-function defbuttlebarr(){//兵士がブロックした際の処理
+//防壁でブロック
+function defbuttlebarr(){
 	socket.emit("defence", {attack: buttleing[attackcou].attack, place: "barrier", lengths:selectList3, name: prm});
 	console.log({attack: buttleing[attackcou].attack, place: "barrier", lengths:selectList3});
 	var actionChild = document.getElementById("Daction");
@@ -924,7 +991,8 @@ function defbuttlebarr(){//兵士がブロックした際の処理
 	selectList3 = [];
 }
 
-function diffence(){//兵士がブロックしてきたときの処理
+//兵士がブロックしてきたときの処理
+function diffence(){
 	var actionChild = document.getElementById("Daction");
 	selectCard = actionChild;
 	for(var i = 0; i < actionChild.children.length; i++){
@@ -942,7 +1010,7 @@ function diffence(){//兵士がブロックしてきたときの処理
 		cardImg.className = "card";
 		actionChild.appendChild(cardImg);
 	}
-	for(i = 0; i < actionChild.children.length; i++){//カードリスト全てにクリックイベントの追加
+	for(i = 0; i < actionChild.children.length; i++){
 		actionChild.children[i].addEventListener("click", selectDiffence, false);
 	}
 	var button = document.createElement("button");
@@ -954,12 +1022,385 @@ function diffence(){//兵士がブロックしてきたときの処理
 	selectList3 = [];
 }
 
-function magic(){
+//ブロックするカードの選択
+function selectDiffence(){
 
+	console.log(document.getElementById("Daction").children);
+	if(!checkSelectCard2(Array.from(document.getElementById("Daction").children).indexOf(this) - 3) && (Array.from(document.getElementById("Daction").children).indexOf(this) -3) >= 0){
+		selectList3.push(Array.from(document.getElementById("Daction").children).indexOf(this) - 3);
+		//alert(selectList3);
+	}
+}
+
+//兵士でブロック
+function defbuttle(){
+	console.log({attack: buttleing[attackcou].attack, place: "soldier", lengths:selectList3});
+	socket.emit("defence", {attack: buttleing[attackcou].attack, place: "soldier", lengths:selectList3, name: prm});
+	var actionChild = document.getElementById("Daction");
+	for(var i = 0; i < actionChild.children.length; i++){
+		if((actionChild.children[i]).classList.contains("action")){
+			(actionChild.children[i]).style.display = "inline";
+		}else{
+			actionChild.removeChild(actionChild.children[i]);
+			i--;
+			console.log(i);
+		}
+	}
+	selectList3 = [];
+}
+
+//魔法を打つ
+function magic(){
+	console.log("magi1_start");
+	var actionChild = document.getElementById("action");
+	selectCard = actionChild;
+
+	for (var i = 0; i < situation[user]["hand"].length; i++){
+		if (situation[user]["hand"][i].number >= 11 || situation[user]["hand"][i].number == 0 || situation[user]["hand"][i].mark == "clover") continue;
+		var cardImg = document.createElement("img");
+		cardImg.src = "./img/" + situation[user]["hand"][i].mark + situation[user]["hand"][i].number + ".jpg";
+		cardImg.style.width = "94px";
+		cardImg.style.width = "94px";
+		cardImg.style.height = "167px";
+		cardImg.style.margin = "0px, 94px, 0px, 0px";
+		cardImg.style.float = "left";
+		cardImg.className = "card";
+		actionChild.appendChild(cardImg);
+	}
+	//クリックイベントの付加
+	for (i = 0; i < actionChild.children.length; i++){
+		actionChild.children[i].addEventListener("click", selectSpell, false);
+	}
+
+	var button = document.createElement("button");
+	button.innerText = "magi1";
+	button.className = "button";
+	button.style.width = "45px";
+	button.style.height = "30px";
+	button.onclick = magic_obj;
+	actionChild.appendChild(button);
+
+	console.log("magi1_end");
+}
+
+//魔法を打つ対象を選択
+function magic_obj(){
+	console.log("magi2_start");
+	var actionChild;
+	actionChild = document.getElementById("action");
+	selectCard = actionChild;
+
+	var res = confirm("自分？");
+	if(res == true){
+		obj = user;
+	}
+	else{
+		obj = enemy;
+	}
+
+	//ボタン以外のaction子要素の削除
+	for (var i = 0; i < actionChild.children.length; i++){
+		if ((actionChild.children[i]).classList.contains("action")){
+			(actionChild.children[i]).style.display = "inline";
+		}else{
+			actionChild.removeChild(actionChild.children[i]);
+			i--;
+		}
+	}
+
+	for (i = 0; i < situation[obj]["soldier"].length; i++){
+		if (situation[obj]["soldier"][i].number >= 11 || situation[obj]["soldier"][i].number == 0) continue;
+		var cardImg = document.createElement("img");
+		cardImg.src = "./img/" + situation[obj]["soldier"][i].mark + situation[obj]["soldier"][i].number + ".jpg";
+		cardImg.style.width = "94px";
+		cardImg.style.width = "94px";
+		cardImg.style.height = "167px";
+		cardImg.style.margin = "0px, 94px, 0px, 0px";
+		cardImg.style.float = "left";
+		cardImg.className = "card";
+		actionChild.appendChild(cardImg);
+	}
+	for (i = 0; i < actionChild.children.length; i++){
+		actionChild.children[i].addEventListener("click", selectObj, false);
+	}
+
+	var button = document.createElement("button");
+	button.innerText = "magi2";
+	button.className = "button";
+	button.style.width = "45px";
+	button.style.height = "30px";
+	button.onclick = magic_cost;
+	actionChild.appendChild(button);
+	console.log("magi2_end");
+
+}
+
+//魔法を撃つためのコストを選択
+function magic_cost(){
+	console.log("magi3_start");
+	var actionChild = document.getElementById("action");
+	selectCard = actionChild;
+
+	//ボタン以外のaction子要素の削除
+	for (var i = 0; i < actionChild.children.length; i++){
+		if ((actionChild.children[i]).classList.contains("action")){
+			(actionChild.children[i]).style.display = "inline";
+		}else{
+			actionChild.removeChild(actionChild.children[i]);
+			i--;
+		}
+	}
+
+	for (i = 0; i < situation[user]["hand"].length; i++){
+		var cardImg = document.createElement("img");
+		cardImg.src = "./img/" + situation[user]["hand"][i].mark + situation[user]["hand"][i].number + ".jpg";
+		cardImg.style.width = "94px";
+		cardImg.style.width = "94px";
+		cardImg.style.height = "167px";
+		cardImg.style.margin = "0px, 94px, 0px, 0px";
+		cardImg.style.float = "left";
+		cardImg.className = "card";
+		actionChild.appendChild(cardImg);
+	}
+	//クリックイベントの付加
+	for (i = 0; i < actionChild.children.length; i++){
+		actionChild.children[i].addEventListener("click", selectCost, false);
+	}
+
+	var button = document.createElement("button");
+	button.innerText = "magi3";
+	button.className = "button";
+	button.style.width = "45px";
+	button.style.height = "30px";
+	button.onclick = magic_chant;
+	actionChild.appendChild(button);
+
+	console.log("magi3_end");
+}
+
+//ディフェンス時の魔法
+function Dmagic(){
+	console.log("Dmagi1_start");
+	var actionChild = document.getElementById("Daction");
+	selectCard = actionChild;
+	
+	for (var i = 0; i < actionChild.children.length; i++){
+		if ((actionChild.children[i]).classList.contains("action")){
+			(actionChild.children[i]).style.display = "inline";
+		}else{
+			actionChild.removeChild(actionChild.children[i]);
+			i--;
+		}
+	}
+
+	//ボタン以外のaction子要素の削除
+	for (i = 0; i < situation[user]["hand"].length; i++){
+		if (situation[user]["hand"][i].number >= 11 || situation[user]["hand"][i].number == 0) continue;
+		var cardImg = document.createElement("img");
+		cardImg.src = "./img/" + situation[user]["hand"][i].mark + situation[user]["hand"][i].number + ".jpg";
+		cardImg.style.width = "94px";
+		cardImg.style.width = "94px";
+		cardImg.style.height = "167px";
+		cardImg.style.margin = "0px, 94px, 0px, 0px";
+		cardImg.style.float = "left";
+		cardImg.className = "card";
+		cardImg.addEventListener("click", selectSpell, false);
+		actionChild.appendChild(cardImg);
+	}
+
+	var button = document.createElement("button");
+	button.innerText = "Dmagi";
+	button.className = "button";
+	button.style.width = "45px";
+	button.style.height = "30px";
+	button.onclick = Dmagic_obj;
+	actionChild.appendChild(button);
+	
+	console.log("Dmagi1_end");
+}
+
+//魔法を打つ対象を選択
+function Dmagic_obj(){
+	console.log("Dmagi2_start");
+	var actionChild;
+	actionChild = document.getElementById("Daction");
+	selectCard = actionChild;
+
+	var res = confirm("自分？");
+	if(res == true){
+		obj = user;
+	}
+	else{
+		obj = enemy;
+	}
+
+	//ボタン以外のaction子要素の削除
+	for (var i = 0; i < actionChild.children.length; i++){
+		if ((actionChild.children[i]).classList.contains("action")){
+			(actionChild.children[i]).style.display = "inline";
+		}else{
+			actionChild.removeChild(actionChild.children[i]);
+			i--;
+		}
+	}
+
+	for (i = 0; i < situation[obj]["soldier"].length; i++){
+		if (situation[obj]["soldier"][i].number >= 11 || situation[obj]["soldier"][i].number == 0) continue;
+		var cardImg = document.createElement("img");
+		cardImg.src = "./img/" + situation[obj]["soldier"][i].mark + situation[obj]["soldier"][i].number + ".jpg";
+		cardImg.style.width = "94px";
+		cardImg.style.width = "94px";
+		cardImg.style.height = "167px";
+		cardImg.style.margin = "0px, 94px, 0px, 0px";
+		cardImg.style.float = "left";
+		cardImg.className = "card";
+		cardImg.addEventListener("click", selectObj, false);
+		actionChild.appendChild(cardImg);
+	}
+	var button = document.createElement("button");
+	button.innerText = "magi2";
+	button.className = "button";
+	button.style.width = "45px";
+	button.style.height = "30px";
+	button.onclick = Dmagic_cost;
+	actionChild.appendChild(button);
+	console.log("Dmagi2_end");
+
+}
+
+//魔法を撃つためのコストを選択
+function Dmagic_cost(){
+	console.log("Dmagi3_start");
+	var actionChild = document.getElementById("Daction");
+	selectCard = actionChild;
+
+	//ボタン以外のaction子要素の削除
+	for (var i = 0; i < actionChild.children.length; i++){
+		if ((actionChild.children[i]).classList.contains("action")){
+			(actionChild.children[i]).style.display = "inline";
+		}else{
+			actionChild.removeChild(actionChild.children[i]);
+			i--;
+		}
+	}
+
+	for (i = 0; i < situation[user]["hand"].length; i++){
+		var cardImg = document.createElement("img");
+		cardImg.src = "./img/" + situation[user]["hand"][i].mark + situation[user]["hand"][i].number + ".jpg";
+		cardImg.style.width = "94px";
+		cardImg.style.width = "94px";
+		cardImg.style.height = "167px";
+		cardImg.style.margin = "0px, 94px, 0px, 0px";
+		cardImg.style.float = "left";
+		cardImg.className = "card";
+		cardImg.addEventListener("click", selectCost, false);
+		actionChild.appendChild(cardImg);
+	}
+
+	var button = document.createElement("button");
+	button.innerText = "magi3";
+	button.className = "button";
+	button.style.width = "45px";
+	button.style.height = "30px";
+	button.onclick = Dmagic_chant;
+	actionChild.appendChild(button);
+
+	console.log("Dmagi3_end");
+}
+
+//撃つスペルの選択
+function selectSpell(){
+	var index = Array.from(findCls(selectCard.children, "card")).indexOf(this);
+	if(!checkSelectSpell(index) && (index) >= 0){//同じカードの複数選択を防ぐ
+		mSelectList.push(index);
+		console.log("ss:" + index)
+	}
+}
+
+//撃つ対象の選択
+function selectObj(){
+	var index = Array.from(findCls(selectCard.children, "card")).indexOf(this);
+	if(!checkSelectSpell(index) && (index) >= 0){//同じカードの複数選択を防ぐ
+		mSelectList2.push(index);
+		console.log("so:"+ index)
+	}
+}
+
+//撃つためのコストの選択
+function selectCost(){
+	var index = Array.from(findCls(selectCard.children, "card")).indexOf(this);
+	if(!checkSelectSpell(index) && (index) >= 0){//同じカードの複数選択を防ぐ
+		mSelectList3.push(index);
+		console.log("sc:" + index)
+	}
+}
+
+//同じカードの複数選択の検出(魔法用)
+function checkSelectSpell(num){
+	var flag = false;
+	for(var i = 0; i < mSelectList.length; i++){
+		if(mSelectList[i] == num){
+			flag = true;
+		}
+	}
+	return flag;
+}
+
+//魔法詠唱
+function magic_chant(){
+	socket.emit("spell", {target: {player: obj == user ? 0 : 1, index: mSelectList2},cost: mSelectList3, hand: mSelectList ,name: prm});
+	
+	//ボタン以外のaction子要素の削除
+	actionChild = document.getElementById("action");
+	for (var i = 0; i < actionChild.children.length; i++){
+		if ((actionChild.children[i]).classList.contains("action")){
+			(actionChild.children[i]).style.display = "inline";
+		}else{
+			actionChild.removeChild(actionChild.children[i]);
+			i--;
+		}
+	}
+	mSelectList = [];
+	mSelectList2 = [];
+	mSelectList3 = [];
+	//モーダルの外をクリックしてモーダルを消す
+
+	document.getElementById("overlay").click();
+}
+
+function Dmagic_chant(){
+	console.log({target: {player: (obj == user ? (user == "user_1" ? 0: 1) : (user == "user_1" ? 1: 0)), playerr: (user == "user_1" ? 0: 1),index: mSelectList2},cost: mSelectList3, hand: mSelectList ,name: prm});
+	socket.emit("spell", {target: {player: (obj == user ? (user == "user_1" ? 0: 1) : (user == "user_1" ? 1: 0)), playerr: (user == "user_1" ? 0: 1),index: mSelectList2},cost: mSelectList3, hand: mSelectList ,name: prm});
+	
+	//ボタン以外のaction子要素の削除
+	actionChild = document.getElementById("Daction");
+	for (var i = 0; i < actionChild.children.length; i++){
+		if ((actionChild.children[i]).classList.contains("action")){
+			(actionChild.children[i]).style.display = "inline";
+		}else{
+			actionChild.removeChild(actionChild.children[i]);
+			i--;
+		}
+	}
+	mSelectList = [];
+	mSelectList2 = [];
+	mSelectList3 = [];
+	attackcou += 1;
+	document.getElementById("Check_diffence").click();
 }
 
 
 //モーダル
+
+
+//モーダルの設定
+function load(){
+	modal("#action", "#overlay", "#open");
+	modal("#cemetery_list", "#overlay", "#check_cemetery");
+	modal("#barrier_list", "#overlay", "#check_barrier");
+	modal("#fin", "#overlay", "#fin_b");
+	modalfunc("#Daction", "#overlay", "#Check_diffence");
+}
 
 function modal(modalwindow, overlay, open){
 	$(open).click(function(){
@@ -997,13 +1438,14 @@ function modal(modalwindow, overlay, open){
 
 
 function modalfunc(modalwindow, overlay, open){
-	$(open).click(function(){
+	$(open).click(function(){//openの要素のクリックイベント
 		modal_on();
 	});
 
+	//モーダルを開く
 	function modal_on(){
-		$(overlay).fadeIn();
-		$(modalwindow).fadeIn();
+		$(overlay).fadeIn();//#overlay要素のフェードイン
+		$(modalwindow).fadeIn();//モーダルウィンドウのフェードイン
 		if(0 < attackcou){
 			actionChild = document.getElementById("Daction");
 			for(var i = 0; i < actionChild.children.length; i++){
@@ -1018,6 +1460,8 @@ function modalfunc(modalwindow, overlay, open){
 			attackcou = attackcou - 1;
 		}
 	}
+
+	//モーダルを閉じる
 	$(document).click(function(event){
 		//console.log(modalwindow.slice(1));
 		//console.log(document.getElementById(modalwindow.slice(1)));

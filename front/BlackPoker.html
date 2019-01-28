@@ -99,10 +99,17 @@
 		</div>
 		
 		<div id="overlay"></div>  
-		<div id="action" class="modal"><button id="attack" class="action" onclick="attacking()">攻撃</button> <button id="magic" class="action" onclick="magic()">魔法</button> </div>
+		<div id="action" class="modal">
+			<button id="attack" class="action" onclick="attacking()">攻撃</button>
+			<button id="magic" class="action" onclick="magic()">魔法</button>
+		</div>
 		<div id="cemetery_list" class="modal"><div class="scroll-contents-vertical"></div></div>
 		<div id="barrier_list" class="modal"><div class="scroll-contents-vertical"></div></div>
-		<div id="Daction" class="modal"><div id="diffence" class="action" onclick="diffence()">ブロック(兵士)</div><div id="diffence_barrier" class="action" onclick="diffence_barrier()">ブロック(防壁)</div></div>
+		<div id="Daction" class="modal">
+			<button id="diffence" class="action" onclick="diffence()">ブロック(兵士)</button>
+			<button id="diffence_barrier" class="action" onclick="diffence_barrier()">ブロック(防壁)</button>
+			<button id="magic" class="action" onclick="Dmagic()">魔法</button>
+		</div>
 		<button id="Check_diffence"></button>
 		<div id="fin" class="modal"><p id="fin_p" style="font-size: 50px"></p></div>
 		<button id="fin_b"></button>
