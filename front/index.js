@@ -31,7 +31,7 @@ var flag2 = false;
 var obj;
 
 function initSocket(){
-	socket = io.connect("ws://localhost:5000/websocket");
+	socket = io.connect("ws://10.130.5.120:5000/websocket");
 
 	// 接続時にソケットIDをサーバから取得する
 
