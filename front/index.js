@@ -312,7 +312,7 @@ function login(){
 	lockScreen(lockId);
 }
 
-//画面をちょっと灰色にするアレ
+//画面を灰色にする
 function lockScreen(id){
 
 	var divTag = $("<div />").attr("id", id);
@@ -329,7 +329,7 @@ function lockScreen(id){
 	$("body").append(divTag);
 }
 
-//灰色をなおすそれ
+//灰色をなおす
 function unlockScreen(id){
 	$("#" + id).remove();
 }
@@ -346,7 +346,7 @@ function chargeAll(){
 	}
 }
 
-//画面遷移(笑)
+//画面遷移
 function transition(){
 	//alert("success!");
 	document.body.textContent = null;
@@ -376,7 +376,7 @@ function transition(){
 	console.log(mycem.style);
 }
 
-//画面遷移(笑)
+//画面遷移
 function toSign(){
 	//alert("success!");
 	document.body.textContent = null;
@@ -403,7 +403,7 @@ function toSign(){
 	});
 }
 
-//画面遷移(笑)
+//画面遷移
 function fromSign(){
 	//alert("success!");
 	document.body.textContent = null;
@@ -592,7 +592,7 @@ function selectTime(){
 	document.getElementById("Select_end").style.overflow = "none";
 }
 
-//ジョーカー召喚の儀
+//ジョーカー召喚の準備
 function selectTime2(){
 	var myhand = document.getElementById("My_hand").children;
 	for(var i = 0; i < myhand.length; i++){
@@ -758,7 +758,7 @@ function selectEnd(){
 		}
 	}
 	else{
-		alert("張っ倒すぞ");
+		alert("召喚コストが足りません");
 	}
 
 	document.getElementById("Select_end").style.border = "none";
