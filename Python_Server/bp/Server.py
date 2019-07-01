@@ -4,6 +4,7 @@ import Game
 from flask import Flask
 from flask_socketio import SocketIO, emit, join_room
 from Card import card_to_json
+import os
 
 
 class wrapInt:
@@ -41,7 +42,6 @@ table_number = wrapInt(0)  # 卓番号
 num = wrapInt(0)  # 卓内内番号
 g: Game = Game.Game()
 game_list = [g]
-
 
 @socketio.on('my_event', namespace='/websocket')
 def test_connect(data):
@@ -102,6 +102,23 @@ def situationF5(m_room: str, e_room: str):
 
 @socketio.on("login", namespace="/websocket")
 def login(data):
+    base = os.path.dirname(os.path.abspath(__file__))
+    name = os.path.normpath(os.path.join(base, './id.csv'))
+    f = open(name, 'r')
+    read = f.readlines()
+    print(data["name"])
+    for row in read:
+        row = row.split("\n")[0]
+        print(row)
+        if data["name"] == row:
+            print("break")
+            break
+    else:
+        f.close()
+        return
+    f.close()
+    print("end")
+
     if num.get() == 2:
         num.reset()
         table_number.inc()  # ゲーム番号のインクリメント
@@ -266,4 +283,39 @@ def defence_end(data):
     print(game.player[1].cemetery.card_list)
 
 
-socketio.run(app, debug=True, host='0.0.0.0')
+@socketio.on("spell", namespace="/websocket")
+def on_spell(data):
+    game_num = ID[data["name"]]
+    room_name = get_keys_from_value(ID, game_num, data["name"])[0]
+    game: Game = game_list[game_num]
+    print(data["target"]["player"])
+    print(data["target"]["playerr"])
+    print(game.turn_player)
+    print(data["hand"][0])
+    print(game.player[data["target"]["playerr"]].hand.card_list[data["hand"][0]])
+    print(game.player[data["target"]["playerr"]].hand.card_list[data["hand"][0]].mark)
+    print(data["target"]["index"])
+    if game.player[data["target"]["playerr"]].hand.card_list[data["hand"][0]].mark == "heart":
+        game.up(data["target"]["player"], data["hand"][0], data["cost"][0], data["target"]["index"][0])
+    elif game.player[data["target"]["playerr"]].hand.card_list[data["hand"][0]].mark == "spade":
+        game.down(data["target"]["playerr"],data["target"]["player"], data["hand"][0], data["cost"][0], data["target"]["index"][0])
+    elif game.player[data["target"]["playerr"]].hand.card_list[data["hand"][0]].mark == "diamond":
+        game.twist(data["target"]["player"], data["hand"][0], data["cost"][0], data["target"]["index"][0])
+    situationF5(room_name, data["name"])
+
+@socketio.on('signUp', namespace='/http')
+def test_connect(data):
+    base = os.path.dirname(os.path.abspath(__file__))
+    name = os.path.normpath(os.path.join(base, './id.csv'))
+    f = open(name, 'r')
+    read = f.readlines()
+    for row in read:
+        row = row.split("\n")[0]
+        if data["id"] == row:
+            return
+    f.close()
+    f = open(name, 'a')
+    f.write(data["id"] + "\n")
+    f.close()
+
+socketio.run(app, debug=False, host='0.0.0.0')
